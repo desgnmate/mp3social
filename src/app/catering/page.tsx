@@ -140,11 +140,6 @@ export default function CateringPage() {
       <main>
         <section className={styles.hero} aria-labelledby="catering-title">
           <div className={styles.heroEditorial}>
-            <div className={styles.heroTopline}>
-              <span>MP3 Social / Catering</span>
-              <span>Melbourne + selected cities</span>
-            </div>
-
             <h1 id="catering-title" className={styles.heroTitle}>
               <span>Matcha rave</span>
               <span className={styles.heroTitleSerif}>catering.</span>
@@ -177,28 +172,8 @@ export default function CateringPage() {
               className={styles.heroImage}
               priority
             />
-            <div className={styles.heroImageCaption}>
-              <span>Matcha first</span>
-              <span>Rave optional</span>
-              <span>Energy included</span>
-            </div>
           </div>
         </section>
-
-        <div className={styles.heroFacts} aria-label="Catering highlights">
-          <article>
-            <span>01</span>
-            <strong>Ceremonial matcha</strong>
-          </article>
-          <article>
-            <span>02</span>
-            <strong>From 30 guests</strong>
-          </article>
-          <article>
-            <span>03</span>
-            <strong>Bar to full rave</strong>
-          </article>
-        </div>
 
         <section
           id="matcha"
@@ -259,17 +234,6 @@ export default function CateringPage() {
                 <span aria-hidden="true">→</span>
               </Link>
             </div>
-          </div>
-        </section>
-
-        <section className={styles.proofStrip} aria-label="Selected partners">
-          <p>POURED WITH</p>
-          <div>
-            {["MILKLAB", "JBL", "REDBULL", "MATCHA SOCIETY", "KIYOCHA MATCHA"].map(
-              (name) => (
-                <span key={name}>{name}</span>
-              ),
-            )}
           </div>
         </section>
 
