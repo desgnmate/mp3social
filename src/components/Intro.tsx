@@ -94,8 +94,6 @@ export function Intro() {
   const img1Ref = useRef<HTMLDivElement>(null);
   const img2Ref = useRef<HTMLDivElement>(null);
   const img3Ref = useRef<HTMLDivElement>(null);
-  const img4Ref = useRef<HTMLDivElement>(null);
-  const img5Ref = useRef<HTMLDivElement>(null);
 
   const [openModal, setOpenModal] = useState<number | null>(null);
 
@@ -142,12 +140,13 @@ export function Intro() {
         // ── P2 lock ──
         tl.to(text2Ref.current!, { x: VW * 2.5, ease: "none", duration: 250 }, 200);
 
-        // ── 5 images ──
+        // ── 3 images ──
         const images = [
-          img1Ref.current!, img2Ref.current!,
-          img3Ref.current!, img4Ref.current!, img5Ref.current!,
+          img1Ref.current!,
+          img2Ref.current!,
+          img3Ref.current!,
         ];
-        const rotations = [-3, 2, -2, 2.5, -2.5];
+        const rotations = [-3, 2, -2];
 
         images.forEach((img, i) => {
           if (!img) return;
@@ -163,7 +162,7 @@ export function Intro() {
 
         images.forEach((img, i) => {
           if (!img) return;
-          const start = 205 + i * 85;
+          const start = 205 + i * 140;
 
           tl.to(
             img,
@@ -174,7 +173,7 @@ export function Intro() {
               opacity: 1,
               filter: "blur(0px)",
               ease: "power1.inOut",
-              duration: 50,
+              duration: 60,
             },
             start,
           );
@@ -187,9 +186,9 @@ export function Intro() {
               opacity: 0,
               filter: "blur(3px)",
               ease: "power1.inOut",
-              duration: 55,
+              duration: 60,
             },
-            start + 85,
+            start + 125,
           );
         });
 
@@ -206,9 +205,7 @@ export function Intro() {
   const imagesData = [
     { ref: img1Ref, img: "/community-bg.jpg", label: "10 AM ENERGY" },
     { ref: img2Ref, img: "/calendar-bg.jpg", label: "GOOD VIBES" },
-    { ref: img3Ref, img: "/community-bg.jpg", label: "MATCHA HOUR" },
-    { ref: img4Ref, img: "/calendar-bg.jpg", label: "MORNING RAVE" },
-    { ref: img5Ref, img: "/community-bg.jpg", label: "NO SLEEP" },
+    { ref: img3Ref, img: "/hero-bg.png", label: "MATCHA HOUR" },
   ];
 
   return (
@@ -219,14 +216,14 @@ export function Intro() {
     >
       <div className="dust-specks" />
 
-      {/* ── Panel 3 overlay — 5 photos ── */}
+      {/* ── Panel 3 overlay — 3 photos ── */}
       <div className="absolute inset-0 z-20">
         {imagesData.map(({ ref, img, label }, i) => (
           <div
             key={i}
             ref={ref}
             className="absolute h-[36vh] w-[20vw] max-w-[280px] cursor-pointer bg-warm-white p-3 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] transition-transform hover:scale-105"
-            style={{ willChange: "transform, filter" }}
+            style={{ willChange: "transform, filter, opacity" }}
             onClick={() => setOpenModal(i)}
           >
             <div className="relative h-[calc(100%-1.75rem)] w-full overflow-hidden">
