@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  "https://mp3-social-catering.takusudhil30denquira.chatgpt.site";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Matcha Rave Catering | MP3 Social",
   description:
     "Ceremonial matcha, a full-service mobile bar, DJ-ready sound, styling and event production for rooms starting at 30.",
