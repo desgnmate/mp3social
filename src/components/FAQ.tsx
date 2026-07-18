@@ -1,27 +1,55 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Reveal } from "./Reveal";
+import { useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { FAQ_ITEMS } from "@/lib/faq-data";
 
-function FAQRow({ question, answer }: { question: string; answer: string }) {
-  const [open, setOpen] = useState(false);
+gsap.registerPlugin(ScrollTrigger);
+
+type FAQRowProps = {
+  answer: string;
+  index: number;
+  open: boolean;
+  question: string;
+  onToggle: () => void;
+};
+
+function FAQRow({
+  answer,
+  index,
+  open,
+  question,
+  onToggle,
+}: FAQRowProps) {
+  const panelId = `events-faq-${index}`;
 
   return (
-    <div className="border-b border-primary-orange/35">
+    <article
+      data-faq-row
+      className={`border-t border-warm-white/45 transition-colors duration-300 last:border-b ${
+        open ? "bg-dark-text text-warm-white" : "text-warm-white"
+      }`}
+    >
       <button
-        onClick={() => setOpen((o) => !o)}
-        className="group flex w-full items-center justify-between py-5 text-left transition-colors hover:text-primary-orange md:py-7"
+        type="button"
+        onClick={onToggle}
+        className="group grid w-full grid-cols-[2.25rem_1fr_auto] items-center gap-3 px-4 py-6 text-left transition-colors hover:bg-dark-text md:grid-cols-[4rem_1fr_auto] md:gap-6 md:px-8 md:py-8 lg:px-10"
         aria-expanded={open}
+        aria-controls={panelId}
       >
-        <span className="heading-display pr-4 text-sm tracking-tight text-primary-orange md:text-base lg:text-lg">
+        <span className="text-[10px] font-black uppercase tracking-[0.18em] opacity-55">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span className="heading-display text-xl leading-[0.95] md:text-3xl lg:text-4xl">
           {question}
         </span>
         <motion.span
           animate={{ rotate: open ? 45 : 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="flex-shrink-0 text-2xl font-light text-primary-orange md:text-3xl"
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="text-3xl font-light leading-none text-warm-white md:text-4xl"
           aria-hidden="true"
         >
           +
@@ -31,52 +59,130 @@ function FAQRow({ question, answer }: { question: string; answer: string }) {
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
+            id={panelId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{
-              height: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
-              opacity: { duration: 0.25 },
+              height: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+              opacity: { duration: 0.3 },
             }}
             className="overflow-hidden"
           >
-            <p className="pb-6 pr-10 text-sm leading-relaxed text-dark-text/80 md:pb-8 md:text-base">
-              {answer}
-            </p>
+            <div className="grid grid-cols-[2.25rem_1fr] gap-3 px-4 pb-8 md:grid-cols-[4rem_1fr] md:gap-6 md:px-8 md:pb-10 lg:px-10">
+              <span aria-hidden="true" />
+              <p className="max-w-2xl font-serif text-lg leading-relaxed text-warm-white/78 md:text-xl">
+                {answer}
+              </p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </article>
   );
 }
 
 export function FAQ() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  useGSAP(
+    () => {
+      if (!headingRef.current || !listRef.current) return;
+
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (reducedMotion) return;
+
+      gsap.from(Array.from(headingRef.current.children), {
+        y: 58,
+        opacity: 0,
+        duration: 1.15,
+        stagger: 0.13,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: headingRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      gsap.from(gsap.utils.toArray<HTMLElement>("[data-faq-row]"), {
+        y: 36,
+        opacity: 0,
+        duration: 0.85,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: listRef.current,
+          start: "top 82%",
+          once: true,
+        },
+      });
+    },
+    { scope: sectionRef },
+  );
+
   return (
     <section
-      className="relative w-full overflow-hidden bg-cream paper-texture"
-      aria-label="Frequently asked questions"
+      id="faq"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-primary-orange"
+      aria-labelledby="faq-title"
     >
-      <div className="dust-specks" />
-      <div className="relative w-full px-6 py-20 md:px-10 md:py-28 lg:px-16 lg:py-32">
-        <Reveal>
-          <div className="text-center">
-            <h2 className="heading-display text-primary-orange text-[clamp(2.5rem,7vw,4.5rem)]">
-              FAQs
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-dark-text/80 md:text-base">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit tincidunt,
-              penatibus erat tellus cum integer morbi
-            </p>
-          </div>
-        </Reveal>
+      <div className="dust-specks opacity-25" />
 
-        <Reveal delay={0.1}>
-          <div className="mt-12 md:mt-16">
-            {FAQ_ITEMS.map((item, i) => (
-              <FAQRow key={i} question={item.question} answer={item.answer} />
-            ))}
+      <div className="page-container-wide relative py-20 md:py-28 lg:py-36">
+        <div
+          ref={headingRef}
+          className="grid items-end gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-20"
+        >
+          <div>
+            <p className="label-caps text-dark-text/65">
+              Questions / No gatekeeping
+            </p>
+            <h2
+              id="faq-title"
+              className="heading-display mt-5 text-[clamp(3.8rem,10vw,9.5rem)] leading-[0.76] tracking-[-0.075em] text-warm-white"
+            >
+              Ask it
+              <br />
+              <span className="font-serif font-normal italic normal-case tracking-[-0.06em] text-dark-text">
+                loud.
+              </span>
+            </h2>
           </div>
-        </Reveal>
+
+          <div className="border-t border-dark-text/45 pt-5">
+            <p className="font-serif text-xl leading-snug text-dark-text md:text-2xl">
+              First rave? Matcha curious? Trying to bring MP3 into your own
+              room? Start here.
+            </p>
+            <div className="mt-8 flex items-center justify-between border-y border-dark-text/25 py-4 text-[10px] font-black uppercase tracking-[0.17em] text-dark-text/65">
+              <span>FAQ</span>
+              <span>01—{String(FAQ_ITEMS.length).padStart(2, "0")}</span>
+            </div>
+          </div>
+        </div>
+
+        <div ref={listRef} className="mt-16 lg:mt-24">
+          {FAQ_ITEMS.map((item, index) => (
+            <FAQRow
+              key={item.question}
+              index={index}
+              question={item.question}
+              answer={item.answer}
+              open={openIndex === index}
+              onToggle={() =>
+                setOpenIndex((current) => (current === index ? null : index))
+              }
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

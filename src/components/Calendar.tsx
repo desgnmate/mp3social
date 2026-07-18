@@ -1,284 +1,314 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import {
-  motion,
-  useMotionValue,
-  AnimatePresence,
-  useReducedMotion,
-} from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import { IMAGES } from "@/lib/images";
-import { CALENDAR_EVENTS, MONTHS, getMonthDays, type CalendarEvent } from "@/lib/calendar-data";
+  CALENDAR_EVENTS,
+  MONTHS,
+  type CalendarEvent,
+} from "@/lib/calendar-data";
 import { EventModal } from "./EventModal";
-import { DatePickerModal } from "./DatePickerModal";
 
-const ZOOM = 1.55;
-const ROTATION = 17;
+gsap.registerPlugin(ScrollTrigger);
+
+const EVENT_IMAGES = [
+  "/community-bg.jpg",
+  "/calendar-bg.jpg",
+  "/hero-bg.png",
+];
 
 export function Calendar() {
-  const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const [monthIndex, setMonthIndex] = useState(4);
   const [year, setYear] = useState(2026);
-  const [direction, setDirection] = useState(1);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [bounds, setBounds] = useState({ left: -300, right: 300, top: -200, bottom: 200 });
-
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  useEffect(() => {
-    const updateBounds = () => {
-      if (!containerRef.current) return;
-      const w = containerRef.current.offsetWidth;
-      const h = containerRef.current.offsetHeight;
-      const maxX = w * 0.4;
-      const maxY = h * 0.4;
-      setBounds({ left: -maxX, right: maxX, top: -maxY, bottom: maxY });
-    };
-    updateBounds();
-    window.addEventListener("resize", updateBounds);
-    return () => window.removeEventListener("resize", updateBounds);
-  }, []);
-
-  const handleDragEnd = () => {
-    const cx = x.get();
-    const cy = y.get();
-    if (
-      Math.abs(cx) > Math.abs(bounds.right) ||
-      Math.abs(cy) > Math.abs(bounds.bottom)
-    ) {
-      x.set(0);
-      y.set(0);
-    }
-  };
-
-  const prev = () => {
-    setDirection(-1);
-    setMonthIndex((i) => (i - 1 + 12) % 12);
-  };
-  const next = () => {
-    setDirection(1);
-    setMonthIndex((i) => (i + 1) % 12);
-  };
-
-  useEffect(() => {
-    x.set(0);
-    y.set(0);
-  }, [monthIndex, x, y]);
-
-  const monthName = MONTHS[monthIndex];
-  const cells = getMonthDays(monthIndex, year);
+  const [previewIndex, setPreviewIndex] = useState(0);
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
-  const [datePickerOpen, setDatePickerOpen] = useState(false);
+
+  const visibleEvents = useMemo(
+    () =>
+      year === 2026
+        ? CALENDAR_EVENTS.filter((event) => event.month === monthIndex)
+        : [],
+    [monthIndex, year],
+  );
+
+  const previewEvent = visibleEvents[previewIndex] ?? null;
+  const previewImage = EVENT_IMAGES[previewIndex % EVENT_IMAGES.length];
+
+  useEffect(() => {
+    setPreviewIndex(0);
+  }, [monthIndex, year]);
+
+  useGSAP(
+    () => {
+      if (
+        !sectionRef.current ||
+        !headingRef.current ||
+        !imageRef.current ||
+        !listRef.current
+      ) {
+        return;
+      }
+
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (reducedMotion) return;
+
+      const headingItems = Array.from(headingRef.current.children);
+      const eventRows = gsap.utils.toArray<HTMLElement>("[data-event-row]");
+
+      gsap.from(headingItems, {
+        y: 54,
+        opacity: 0,
+        duration: 1.15,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: headingRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      gsap.from(imageRef.current, {
+        clipPath: "inset(12% 12% 12% 12%)",
+        scale: 0.96,
+        opacity: 0,
+        duration: 1.35,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: imageRef.current,
+          start: "top 82%",
+          once: true,
+        },
+      });
+
+      gsap.from(eventRows, {
+        y: 42,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.14,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: listRef.current,
+          start: "top 78%",
+          once: true,
+        },
+      });
+
+      gsap.to(imageRef.current, {
+        yPercent: -5,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 2,
+        },
+      });
+    },
+    { scope: sectionRef },
+  );
+
+  const shiftMonth = (amount: number) => {
+    let nextMonth = monthIndex + amount;
+    let nextYear = year;
+
+    if (nextMonth < 0) {
+      nextMonth = 11;
+      nextYear -= 1;
+    } else if (nextMonth > 11) {
+      nextMonth = 0;
+      nextYear += 1;
+    }
+
+    setMonthIndex(nextMonth);
+    setYear(nextYear);
+  };
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-warm-white"
-      aria-label="Event calendar"
+      id="calendar"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-dark-text text-warm-white"
+      aria-labelledby="events-title"
     >
-      <div className="relative w-full">
+      <div className="dust-specks opacity-20" />
+
+      <div className="page-container-wide relative py-20 md:py-28 lg:py-36">
         <div
-          ref={containerRef}
-          className="relative w-full overflow-hidden"
-          style={{
-            aspectRatio: "16 / 11",
-            maxHeight: "900px",
-            boxShadow:
-              "0 30px 60px -20px rgba(44,34,27,0.35), 0 18px 30px -10px rgba(44,34,27,0.25)",
-            perspective: "1600px",
-            perspectiveOrigin: "50% 50%",
-          }}
+          ref={headingRef}
+          className="grid items-end gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-20"
         >
-          {/* Static background — does not move with drag */}
-          <div className="pointer-events-none absolute inset-0">
-            <Image
-              src={IMAGES.calendar}
-              alt="Table with matcha drinks and pastries"
-              fill
-              sizes="100vw"
-              className="object-cover"
-              style={{ opacity: 0.88 }}
-              quality={85}
-              draggable={false}
-              priority
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.18) 100%)",
-              }}
-            />
-            <div className="dust-specks" />
+          <div>
+            <p className="label-caps text-warm-white/55">
+              MP3 / Events · Melbourne
+            </p>
+            <h2
+              id="events-title"
+              className="heading-display mt-5 text-[clamp(4.5rem,12vw,11rem)] leading-[0.72] tracking-[-0.075em]"
+            >
+              What&apos;s
+              <br />
+              <span className="text-primary-orange">on?</span>
+            </h2>
           </div>
 
-          {/* Draggable grid layer — only the dates/events move */}
-          <motion.div
-            drag
-            dragElastic={0.25}
-            dragMomentum={false}
-            dragConstraints={bounds}
-            onDragEnd={handleDragEnd}
-            style={{
-              x,
-              y,
-              scale: ZOOM,
-              rotate: reduce ? 0 : ROTATION,
-              rotateX: reduce ? 0 : 18,
-              transformStyle: "preserve-3d",
-              transformOrigin: "50% 50%",
-              willChange: "transform",
-            }}
-            className="absolute inset-0 cursor-grab touch-none active:cursor-grabbing"
-          >
-            <div
-              className="absolute -inset-[40%] grid"
-              style={{
-                gridTemplateColumns: "repeat(7, 1fr)",
-                gridTemplateRows: "repeat(6, 1fr)",
-                gap: "1px",
-                padding: "clamp(0.6rem, 1.2vw, 1.25rem)",
-              }}
-            >
-                {cells.map((cell, idx) => {
-                  if (cell.empty) {
-                    return <div key={`e-${idx}`} />;
-                  }
-                  const event = CALENDAR_EVENTS.find(
-                    (e) => e.month === monthIndex && e.date === cell.day
-                  );
-                  return (
-                    <div
-                      key={`d-${cell.day}`}
-                      className="relative flex items-start justify-end border-[2.5px] border-warm-white/80 p-1.5 md:p-2.5"
-                    >
-                      <span className="relative z-10 text-lg font-black tracking-tight text-warm-white drop-shadow-md md:text-xl lg:text-2xl">
-                        {cell.day}
-                      </span>
-                      {event && (
-                        <motion.button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedEvent(event);
-                          }}
-                          initial={
-                            reduce ? false : { opacity: 0, scale: 0.9, y: 6 }
-                          }
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          whileHover={
-                            reduce
-                              ? undefined
-                              : { scale: 1.05, y: -2, transition: { duration: 0.2 } }
-                          }
-                          whileTap={reduce ? undefined : { scale: 0.97 }}
-                          transition={{
-                            duration: 0.4,
-                            delay: 0.1 + idx * 0.015,
-                          }}
-                          aria-label={`View details for ${event.title} on May ${event.date}`}
-                          className="group absolute inset-1 flex cursor-pointer items-center justify-center overflow-hidden bg-primary-orange p-1 text-center focus:outline-none focus:ring-2 focus:ring-warm-white focus:ring-offset-1 focus:ring-offset-primary-orange md:inset-2 md:p-2"
-                        >
-                            <span className="relative text-xs font-black uppercase leading-tight tracking-tight text-warm-white md:text-sm lg:text-base">
-                            <span className="block group-hover:hidden">
-                              {event.title}
-                            </span>
-                            <span className="hidden text-warm-white/90 group-hover:block">
-                              VIEW
-                            </span>
-                          </span>
-                          <span
-                            className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-warm-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                            aria-hidden="true"
-                          />
-                        </motion.button>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-          </motion.div>
-
-          <div className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex flex-col items-center gap-2 md:bottom-8 md:gap-3">
-            <div className="pointer-events-auto flex items-center gap-3 rounded-full bg-cream px-4 py-2 shadow-sm md:gap-4 md:px-6 md:py-3">
+          <div className="border-t border-warm-white/35 pt-5">
+            <p className="max-w-md font-serif text-xl leading-snug text-warm-white/85 md:text-2xl">
+              Morning raves, matcha parties and third-space takeovers. Pick a
+              date and meet us in the room.
+            </p>
+            <div className="mt-8 flex items-center justify-between border-y border-warm-white/25 py-3">
               <button
-                onClick={prev}
+                type="button"
+                onClick={() => shiftMonth(-1)}
+                className="flex h-11 w-11 items-center justify-center text-lg text-primary-orange transition-transform hover:-translate-x-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-orange"
                 aria-label="Previous month"
-                className="flex h-7 w-7 items-center justify-center text-primary-orange transition-transform hover:scale-110 active:scale-95 md:h-8 md:w-8"
               >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M10 12L6 8L10 4"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                ←
               </button>
-
-              <div className="relative h-7 w-28 overflow-hidden md:h-8 md:w-32">
-                <button
-                  type="button"
-                  onClick={() => setDatePickerOpen(true)}
-                  className="absolute inset-0 flex w-full items-center justify-center text-sm font-extrabold uppercase tracking-[0.2em] text-primary-orange transition-colors hover:text-primary-orange/70 md:text-base"
-                  aria-label="Open date picker"
-                >
-                  {monthName}
-                </button>
+              <div className="text-center">
+                <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-warm-white/50">
+                  Lineup
+                </span>
+                <span className="mt-1 block text-sm font-black uppercase tracking-[0.14em]">
+                  {MONTHS[monthIndex]} {year}
+                </span>
               </div>
-
               <button
-                onClick={next}
+                type="button"
+                onClick={() => shiftMonth(1)}
+                className="flex h-11 w-11 items-center justify-center text-lg text-primary-orange transition-transform hover:translate-x-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-orange"
                 aria-label="Next month"
-                className="flex h-7 w-7 items-center justify-center text-primary-orange transition-transform hover:scale-110 active:scale-95 md:h-8 md:w-8"
               >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6 4L10 8L6 12"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                →
               </button>
             </div>
+          </div>
+        </div>
 
-            <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-warm-white/70 md:text-xs">
-              Drag to pan the calendar
-            </p>
+        <div className="mt-16 grid overflow-hidden border border-warm-white/35 lg:mt-24 lg:grid-cols-[0.9fr_1.1fr]">
+          <div
+            ref={imageRef}
+            className="relative min-h-[520px] overflow-hidden border-b border-warm-white/35 bg-primary-orange lg:min-h-[720px] lg:border-b-0 lg:border-r"
+          >
+            <Image
+              key={previewImage}
+              src={previewEvent ? previewImage : "/calendar-bg.jpg"}
+              alt={
+                previewEvent
+                  ? `${previewEvent.title} at MP3 Social`
+                  : "MP3 Social matcha event"
+              }
+              fill
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover transition-transform duration-700"
+              quality={88}
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-dark-text/90 via-dark-text/10 to-dark-text/30"
+              aria-hidden="true"
+            />
+
+            <div className="absolute left-5 top-5 border border-warm-white/50 bg-dark-text/70 px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] backdrop-blur-sm md:left-7 md:top-7">
+              Current transmission
+            </div>
+
+            <div className="absolute inset-x-0 bottom-0 grid grid-cols-[auto_1fr] items-end gap-5 p-5 md:gap-8 md:p-8">
+              <span className="heading-display text-[clamp(4rem,9vw,8rem)] leading-[0.7] text-primary-orange">
+                {previewEvent
+                  ? String(previewEvent.date).padStart(2, "0")
+                  : "—"}
+              </span>
+              <div className="border-l border-warm-white/45 pl-5 md:pl-8">
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-warm-white/55">
+                  {previewEvent ? previewEvent.time : "No date announced"}
+                </p>
+                <p className="heading-display mt-2 text-2xl md:text-4xl">
+                  {previewEvent ? previewEvent.title : "Stay tuned"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div ref={listRef} className="bg-cream text-dark-text">
+            <div
+              data-event-row
+              className="flex min-h-20 items-center justify-between border-b border-dark-text px-5 py-4 md:px-7"
+            >
+              <span className="label-caps">The next three</span>
+              <span className="font-serif text-lg italic text-primary-orange">
+                {visibleEvents.length
+                  ? `${visibleEvents.length} dates`
+                  : "No dates yet"}
+              </span>
+            </div>
+
+            {visibleEvents.length > 0 ? (
+              visibleEvents.map((event, index) => (
+                <button
+                  type="button"
+                  data-event-row
+                  key={`${event.month}-${event.date}-${event.title}`}
+                  onMouseEnter={() => setPreviewIndex(index)}
+                  onFocus={() => setPreviewIndex(index)}
+                  onClick={() => setSelectedEvent(event)}
+                  className={`group grid w-full grid-cols-[4.5rem_1fr_auto] items-center gap-4 border-b border-dark-text px-5 py-7 text-left transition-colors duration-300 last:border-b-0 md:grid-cols-[6rem_1fr_auto] md:gap-7 md:px-7 md:py-10 ${
+                    previewIndex === index
+                      ? "bg-primary-orange text-warm-white"
+                      : "bg-cream text-dark-text hover:bg-primary-orange hover:text-warm-white"
+                  }`}
+                >
+                  <span className="heading-display text-5xl leading-none md:text-7xl">
+                    {String(event.date).padStart(2, "0")}
+                  </span>
+                  <span>
+                    <span className="block text-[10px] font-bold uppercase tracking-[0.17em] opacity-55">
+                      {event.time}
+                    </span>
+                    <span className="heading-display mt-2 block text-2xl leading-[0.9] md:text-4xl">
+                      {event.title}
+                    </span>
+                    <span className="mt-3 hidden text-xs font-semibold uppercase tracking-[0.12em] opacity-65 sm:block">
+                      {event.location}
+                    </span>
+                  </span>
+                  <span
+                    className="text-xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                    aria-hidden="true"
+                  >
+                    ↗
+                  </span>
+                </button>
+              ))
+            ) : (
+              <div
+                data-event-row
+                className="flex min-h-[420px] flex-col items-start justify-between p-7 md:p-10"
+              >
+                <p className="heading-display max-w-[12ch] text-4xl text-primary-orange md:text-6xl">
+                  Nothing announced. Yet.
+                </p>
+                <p className="max-w-sm font-serif text-xl leading-snug">
+                  The next drop lands here first. Check back soon or follow MP3
+                  Social for the room reveal.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       <EventModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
-
-      <DatePickerModal
-        open={datePickerOpen}
-        initialMonth={monthIndex}
-        initialYear={year}
-        onClose={() => setDatePickerOpen(false)}
-        onConfirm={(m, y) => {
-          setDirection(m > monthIndex || y > year ? 1 : -1);
-          setMonthIndex(m);
-          setYear(y);
-          setDatePickerOpen(false);
-        }}
-      />
     </section>
   );
 }
