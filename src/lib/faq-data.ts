@@ -5,34 +5,34 @@ export type FAQItem = {
 
 export const FAQ_ITEMS: FAQItem[] = [
   {
-    question: "Lorem ipsum dolor sit amet consectetur?",
+    question: "Is MP3 Social a club?",
     answer:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+      "Not exactly. We create sober-friendly music, matcha and community events in spaces that feel somewhere between a cafe, a party and a creative gathering.",
   },
   {
-    question: "Lorem ipsum dolor sit amet?",
+    question: "Do I need to be sober to come?",
     answer:
-      "Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
+      "No. You only need to respect the room and the people in it. Our events focus on connection and energy without making alcohol the centre of the experience.",
   },
   {
-    question: "Lorem ipsum dolor sit amet consectetur?",
+    question: "Where are events held?",
     answer:
-      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error.",
+      "Locations change by event. Confirmed details are shared on the event listing and directly with ticket holders.",
   },
   {
-    question: "Lorem ipsum dolor sit amet consectetur adipiscing?",
+    question: "Can I bring MP3 to my event?",
     answer:
-      "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
+      "Yes. Our catering team handles office events, launches, weddings, workshops and brand activations. Visit the catering page to explore the formats.",
   },
   {
-    question: "Lorem ipsum dolor sit amet consectetur adipiscing elit?",
+    question: "How do partnerships work?",
     answer:
-      "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore.",
+      "Send us the idea, audience and timing through the contact page. We review collaborations that genuinely fit the community.",
   },
 ];
 
 export const FAQ_LABELS = [
-  "LOREM IPSUM",
-  "LOREM IPSUM",
-  "LOREM IPSUM",
+  "EVENTS",
+  "CATERING",
+  "COMMUNITY",
 ] as const;

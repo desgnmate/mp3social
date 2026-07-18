@@ -7,16 +7,16 @@ import { Reveal } from "./Reveal";
 const FOOTER_COLUMNS = [
   {
     items: [
-      { label: "HOME", href: "#" },
-      { label: "SHOP", href: "#" },
+      { label: "HOME", href: "/" },
+      { label: "SHOP", href: "/shop" },
       { label: "NEWSLETTER", href: "#" },
     ],
   },
   {
     items: [
-      { label: "FAQS", href: "#" },
-      { label: "ABOUT", href: "#" },
-      { label: "CONTACT", href: "#" },
+      { label: "FAQS", href: "/faqs" },
+      { label: "ABOUT", href: "/about" },
+      { label: "CONTACT", href: "/contact" },
     ],
   },
   {

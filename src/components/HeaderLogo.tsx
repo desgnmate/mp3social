@@ -1,49 +1,46 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const MENU_ITEMS = [
-  { label: "SHOP", href: "#" },
-  { label: "FAQS", href: "#" },
-  { label: "ABOUT", href: "#" },
-  { label: "CONTACT", href: "#" },
+  { label: "Events", href: "/", mobile: false },
+  { label: "Catering", href: "/catering", mobile: true },
+  { label: "Shop", href: "/shop", mobile: false },
+  { label: "FAQs", href: "/faqs", mobile: false },
+  { label: "About", href: "/about", mobile: false },
+  { label: "Contact", href: "/contact", mobile: true },
 ];
 
 export function HeaderLogo() {
-  return (
-    <header className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between px-4 pt-4 md:px-8 md:pt-6 lg:px-10">
-      <a
-        href="#"
-        aria-label="MP3 Social home"
-        className="block"
-        style={{ animation: "fade-in 0.6s ease-out 0.1s both" }}
-      >
-        <div className="relative h-10 w-[88px] md:h-12 md:w-[106px]">
-          <Image
-            src="/mp3-logo.png"
-            alt="MP3 Social"
-            fill
-            sizes="106px"
-            className="object-contain"
-            quality={100}
-            priority
-          />
-        </div>
-      </a>
+  const pathname = usePathname();
+  const cateringRoutes = ["/catering", "/our-way", "/whats-included", "/book-now"];
 
-      <nav
-        className="flex items-center gap-3 md:gap-6"
-        style={{ animation: "fade-in 0.6s ease-out 0.2s both" }}
-      >
-        {MENU_ITEMS.map((item) => (
-          <a
-            key={item.label}
-            href={item.href}
-            className="text-[10px] font-semibold uppercase tracking-[0.05em] text-warm-white transition-colors duration-200 hover:text-primary-orange md:text-xs"
-          >
-            {item.label}
-          </a>
-        ))}
+  return (
+    <header className="absolute left-0 right-0 top-0 z-50 flex h-20 items-center justify-between px-5 md:h-24 md:px-10">
+      <Link href="/" aria-label="MP3 Social home" className="relative h-10 w-[88px] shrink-0 md:h-11 md:w-[100px]">
+        <Image src="/mp3-logo-new.png" alt="MP3 Social" fill sizes="100px" className="object-contain" priority />
+      </Link>
+
+      <nav aria-label="Primary navigation" className="flex items-center gap-1 md:gap-2">
+        {MENU_ITEMS.map((item) => {
+          const active = item.href === "/"
+            ? pathname === "/"
+            : item.href === "/catering"
+              ? cateringRoutes.some((route) => pathname.startsWith(route))
+              : pathname.startsWith(item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={active ? "page" : undefined}
+              className={`${item.mobile ? "inline-flex" : "hidden md:inline-flex"} min-h-9 items-center border-b px-2 text-[9px] font-bold uppercase tracking-[0.08em] text-primary-orange transition-opacity hover:opacity-55 md:px-3 md:text-[10px] ${active ? "border-primary-orange" : "border-transparent"}`}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
       </nav>
     </header>
   );
