@@ -17,6 +17,7 @@ const MENU_ITEMS = [
 export function HeaderLogo() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const isEventsPage = pathname === "/";
   const cateringRoutes = ["/catering", "/our-way", "/whats-included", "/book-now"];
 
   useEffect(() => {
@@ -31,7 +32,13 @@ export function HeaderLogo() {
         : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-[100] border-b border-dark-text/15 bg-warm-white text-dark-text">
+    <header
+      className={`left-0 right-0 top-0 z-[100] ${
+        isEventsPage
+          ? "absolute border-b border-transparent bg-transparent text-warm-white"
+          : "sticky border-b border-dark-text/15 bg-warm-white text-dark-text"
+      }`}
+    >
       <div className="grid min-h-[72px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-5 lg:min-h-[80px] lg:px-8">
         <Link
           href="/"
@@ -62,7 +69,9 @@ export function HeaderLogo() {
                 className={`relative flex min-h-11 items-center px-3 text-[10px] font-bold uppercase tracking-[0.12em] transition-colors after:absolute after:bottom-1.5 after:left-3 after:right-3 after:h-px after:origin-left after:bg-primary-orange after:transition-transform hover:text-primary-orange ${
                   active
                     ? "text-primary-orange after:scale-x-100"
-                    : "text-dark-text/75 after:scale-x-0 hover:after:scale-x-100"
+                    : `${
+                        isEventsPage ? "text-warm-white/85" : "text-dark-text/75"
+                      } after:scale-x-0 hover:after:scale-x-100`
                 }`}
               >
                 {item.label}
@@ -81,7 +90,11 @@ export function HeaderLogo() {
           </Link>
           <button
             type="button"
-            className="inline-flex min-h-11 min-w-[70px] items-center justify-center border border-dark-text/20 px-3 text-[10px] font-extrabold uppercase tracking-[0.12em] transition-colors hover:border-primary-orange hover:text-primary-orange lg:hidden"
+            className={`inline-flex min-h-11 min-w-[70px] items-center justify-center border px-3 text-[10px] font-extrabold uppercase tracking-[0.12em] transition-colors hover:border-primary-orange hover:text-primary-orange lg:hidden ${
+              isEventsPage
+                ? "border-warm-white/45 text-warm-white"
+                : "border-dark-text/20 text-dark-text"
+            }`}
             aria-expanded={menuOpen}
             aria-controls="mobile-primary-navigation"
             onClick={() => setMenuOpen((open) => !open)}
