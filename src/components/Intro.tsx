@@ -125,8 +125,9 @@ export function Intro() {
             trigger: section,
             pin: true,
             start: "top top",
-            end: () => `+=${track.scrollWidth - VW}`,
-            scrub: 1,
+            end: () => `+=${(track.scrollWidth - VW) * 1.2}`,
+            scrub: 2.25,
+            anticipatePin: 1,
             invalidateOnRefresh: true,
           },
         });
@@ -146,22 +147,50 @@ export function Intro() {
           img1Ref.current!, img2Ref.current!,
           img3Ref.current!, img4Ref.current!, img5Ref.current!,
         ];
-        const rotations = [-6, 5, -3, 4, -5];
+        const rotations = [-3, 2, -2, 2.5, -2.5];
 
         images.forEach((img, i) => {
           if (!img) return;
           gsap.set(img, {
-            x: VW, scale: 0.2, rotation: rotations[i],
-            filter: "blur(10px)",
+            x: VW * 0.42,
+            scale: 0.8,
+            rotation: rotations[i] * 1.35,
+            opacity: 0,
+            filter: "blur(3px)",
             left: "50%", top: "50%", xPercent: -50, yPercent: -50,
           });
         });
 
         images.forEach((img, i) => {
           if (!img) return;
-          const start = 200 + i * 50;
-          tl.to(img, { x: 0, scale: 1, filter: "blur(0px)", ease: "none", duration: 20 }, start);
-          tl.to(img, { x: -VW, scale: 0.2, filter: "blur(10px)", ease: "none", duration: 20 }, start + 30);
+          const start = 205 + i * 85;
+
+          tl.to(
+            img,
+            {
+              x: 0,
+              scale: 1,
+              rotation: rotations[i],
+              opacity: 1,
+              filter: "blur(0px)",
+              ease: "power1.inOut",
+              duration: 50,
+            },
+            start,
+          );
+          tl.to(
+            img,
+            {
+              x: -VW * 0.42,
+              scale: 0.86,
+              rotation: rotations[i] * 0.35,
+              opacity: 0,
+              filter: "blur(3px)",
+              ease: "power1.inOut",
+              duration: 55,
+            },
+            start + 85,
+          );
         });
 
         // ── P2 unlock, P4 lock ──
