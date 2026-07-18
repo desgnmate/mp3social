@@ -1,4 +1,5 @@
 import { mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 const workerSource = `const HAS_FILE_EXTENSION = /\\.[a-z0-9]+$/i;
 
@@ -22,5 +23,8 @@ export default {
 };
 `;
 
-mkdirSync("dist/server", { recursive: true });
-writeFileSync("dist/server/index.js", workerSource);
+const outputDirectory = process.env.NEXT_DIST_DIR || "dist";
+const serverDirectory = join(outputDirectory, "server");
+
+mkdirSync(serverDirectory, { recursive: true });
+writeFileSync(join(serverDirectory, "index.js"), workerSource);

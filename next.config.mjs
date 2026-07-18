@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   output: "export",
-  distDir: "dist",
+  distDir: process.env.NEXT_DIST_DIR || "dist",
   images: {
     unoptimized: true,
     remotePatterns: [

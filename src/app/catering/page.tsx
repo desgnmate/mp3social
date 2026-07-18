@@ -4,15 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
+import { HeaderLogo } from "@/components/HeaderLogo";
 import styles from "./catering.module.css";
-
-const TICKER_ITEMS = [
-  "CEREMONIAL MATCHA",
-  "DJ-READY SOUND",
-  "FULL-SERVICE BAR",
-  "FROM 30 GUESTS",
-  "BUILT FOR RAVES",
-];
 
 const MATCHA_MENU = [
   {
@@ -96,34 +89,6 @@ const FAQS = [
   },
 ];
 
-function CateringHeader() {
-  return (
-    <header className={styles.header}>
-      <Link href="/" className={styles.logo} aria-label="MP3 Social home">
-        <Image
-          src="/mp3-logo-new.png"
-          alt="MP3 Social"
-          fill
-          sizes="100px"
-          className="object-contain"
-          priority
-        />
-      </Link>
-
-      <nav className={styles.nav} aria-label="Catering navigation">
-        <a href="#matcha">Matcha</a>
-        <a href="#rave">Rave mode</a>
-        <a href="#faq">FAQs</a>
-      </nav>
-
-      <Link href="/book-now" className={styles.headerCta}>
-        Book the bar
-        <span aria-hidden="true">↗</span>
-      </Link>
-    </header>
-  );
-}
-
 function FAQList() {
   const [open, setOpen] = useState<number | null>(0);
 
@@ -170,65 +135,69 @@ function FAQList() {
 export default function CateringPage() {
   return (
     <div className={styles.page}>
-      <CateringHeader />
+      <HeaderLogo />
 
       <main>
         <section className={styles.hero} aria-labelledby="catering-title">
-          <Image
-            src="/hero-bg.png"
-            alt="A packed MP3 Social matcha rave"
-            fill
-            sizes="100vw"
-            className={styles.heroImage}
-            priority
-          />
-          <div className={styles.heroShade} aria-hidden="true" />
-
-          <div className={styles.heroContent}>
+          <div className={styles.heroEditorial}>
             <div className={styles.heroTopline}>
-              <span>Matcha bar + rave catering</span>
+              <span>MP3 Social / Catering</span>
               <span>Melbourne + selected cities</span>
             </div>
 
             <h1 id="catering-title" className={styles.heroTitle}>
-              <span>Matcha</span>
-              <span className={styles.heroTitleLight}>Rave</span>
-              <span>Catering</span>
+              <span>Matcha rave</span>
+              <span className={styles.heroTitleSerif}>catering.</span>
             </h1>
 
             <div className={styles.heroBottom}>
               <p>
-                Ceremonial matcha at volume. A full-service bar, sound, styling
-                and crew for rooms starting at 30.
+                Ceremonial matcha, served at volume. Book the bar on its own or
+                build it into a full rave with sound, styling and crew.
               </p>
               <div className={styles.heroActions}>
                 <Link href="/book-now" className={styles.primaryButton}>
-                  Book the matcha bar
+                  Book catering
                   <span aria-hidden="true">↗</span>
                 </Link>
                 <a href="#matcha" className={styles.textButton}>
-                  See what we pour
+                  Explore the menu
                   <span aria-hidden="true">↓</span>
                 </a>
               </div>
             </div>
           </div>
 
-          <div className={styles.heroStamp} aria-hidden="true">
-            <span>Sober energy</span>
-            <strong>Loud rooms</strong>
+          <div className={styles.heroImageFrame}>
+            <Image
+              src="/hero-bg.png"
+              alt="A packed MP3 Social matcha rave"
+              fill
+              sizes="100vw"
+              className={styles.heroImage}
+              priority
+            />
+            <div className={styles.heroImageCaption}>
+              <span>Matcha first</span>
+              <span>Rave optional</span>
+              <span>Energy included</span>
+            </div>
           </div>
         </section>
 
-        <div className={styles.ticker} aria-label="Catering highlights">
-          <div className={styles.tickerTrack}>
-            {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, index) => (
-              <span key={`${item}-${index}`}>
-                {item}
-                <b aria-hidden="true">✦</b>
-              </span>
-            ))}
-          </div>
+        <div className={styles.heroFacts} aria-label="Catering highlights">
+          <article>
+            <span>01</span>
+            <strong>Ceremonial matcha</strong>
+          </article>
+          <article>
+            <span>02</span>
+            <strong>From 30 guests</strong>
+          </article>
+          <article>
+            <span>03</span>
+            <strong>Bar to full rave</strong>
+          </article>
         </div>
 
         <section

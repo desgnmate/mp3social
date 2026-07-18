@@ -53,7 +53,7 @@ export function SubpageShell({
 
       <main>
         <section
-          className="relative overflow-hidden bg-cream pt-24 md:pt-28"
+          className="relative overflow-hidden bg-cream"
           aria-labelledby="subpage-title"
         >
           <div className="page-container section-pad-y">

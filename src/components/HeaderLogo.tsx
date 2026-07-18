@@ -3,45 +3,129 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const MENU_ITEMS = [
-  { label: "Events", href: "/", mobile: false },
-  { label: "Catering", href: "/catering", mobile: true },
-  { label: "Shop", href: "/shop", mobile: false },
-  { label: "FAQs", href: "/faqs", mobile: false },
-  { label: "About", href: "/about", mobile: false },
-  { label: "Contact", href: "/contact", mobile: true },
+  { label: "Events", href: "/" },
+  { label: "Catering", href: "/catering" },
+  { label: "Shop", href: "/shop" },
+  { label: "FAQs", href: "/faqs" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function HeaderLogo() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
   const cateringRoutes = ["/catering", "/our-way", "/whats-included", "/book-now"];
 
-  return (
-    <header className="absolute left-0 right-0 top-0 z-50 flex h-20 items-center justify-between px-5 md:h-24 md:px-10">
-      <Link href="/" aria-label="MP3 Social home" className="relative h-10 w-[88px] shrink-0 md:h-11 md:w-[100px]">
-        <Image src="/mp3-logo-new.png" alt="MP3 Social" fill sizes="100px" className="object-contain" priority />
-      </Link>
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
-      <nav aria-label="Primary navigation" className="flex items-center gap-1 md:gap-2">
-        {MENU_ITEMS.map((item) => {
-          const active = item.href === "/"
-            ? pathname === "/"
-            : item.href === "/catering"
-              ? cateringRoutes.some((route) => pathname.startsWith(route))
-              : pathname.startsWith(item.href);
-          return (
+  const isActive = (href: string) =>
+    href === "/"
+      ? pathname === "/"
+      : href === "/catering"
+        ? cateringRoutes.some((route) => pathname.startsWith(route))
+        : pathname.startsWith(href);
+
+  return (
+    <header className="sticky top-0 z-[100] border-b border-dark-text/15 bg-warm-white text-dark-text">
+      <div className="grid min-h-[72px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-5 lg:min-h-[80px] lg:px-8">
+        <Link
+          href="/"
+          aria-label="MP3 Social home"
+          className="relative h-10 w-[86px] shrink-0 lg:h-11 lg:w-[96px]"
+        >
+          <Image
+            src="/mp3-logo-new.png"
+            alt="MP3 Social"
+            fill
+            sizes="96px"
+            className="object-contain"
+            priority
+          />
+        </Link>
+
+        <nav
+          aria-label="Primary navigation"
+          className="hidden items-center gap-1 lg:flex"
+        >
+          {MENU_ITEMS.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`relative flex min-h-11 items-center px-3 text-[10px] font-bold uppercase tracking-[0.12em] transition-colors after:absolute after:bottom-1.5 after:left-3 after:right-3 after:h-px after:origin-left after:bg-primary-orange after:transition-transform hover:text-primary-orange ${
+                  active
+                    ? "text-primary-orange after:scale-x-100"
+                    : "text-dark-text/75 after:scale-x-0 hover:after:scale-x-100"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="flex items-center justify-end gap-2">
+          <Link
+            href="/book-now"
+            className="hidden min-h-11 items-center gap-5 border border-primary-orange bg-primary-orange px-4 text-[10px] font-extrabold uppercase tracking-[0.11em] text-warm-white transition-colors hover:bg-burnt-orange sm:inline-flex"
+          >
+            Book catering
+            <span aria-hidden="true">↗</span>
+          </Link>
+          <button
+            type="button"
+            className="inline-flex min-h-11 min-w-[70px] items-center justify-center border border-dark-text/20 px-3 text-[10px] font-extrabold uppercase tracking-[0.12em] transition-colors hover:border-primary-orange hover:text-primary-orange lg:hidden"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-primary-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? "Close" : "Menu"}
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="mobile-primary-navigation"
+        className={`overflow-hidden border-t border-dark-text/15 bg-cream transition-[max-height,opacity] duration-300 lg:hidden ${
+          menuOpen ? "max-h-[34rem] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <nav
+          aria-label="Mobile primary navigation"
+          className="grid grid-cols-2 px-4 py-3 sm:px-5"
+        >
+          {MENU_ITEMS.map((item, index) => {
+            const active = isActive(item.href);
+            return (
             <Link
               key={item.href}
               href={item.href}
               aria-current={active ? "page" : undefined}
-              className={`${item.mobile ? "inline-flex" : "hidden md:inline-flex"} min-h-9 items-center border-b px-2 text-[9px] font-bold uppercase tracking-[0.08em] text-primary-orange transition-opacity hover:opacity-55 md:px-3 md:text-[10px] ${active ? "border-primary-orange" : "border-transparent"}`}
+              className={`flex min-h-14 items-center justify-between border-b border-dark-text/15 px-1 text-xs font-extrabold uppercase tracking-[0.11em] ${
+                index % 2 === 0 ? "mr-3" : "ml-3"
+              } ${active ? "text-primary-orange" : "text-dark-text"}`}
             >
               {item.label}
+              <span aria-hidden="true">{active ? "●" : "↗"}</span>
             </Link>
           );
         })}
-      </nav>
+          <Link
+            href="/book-now"
+            className="col-span-2 mt-4 flex min-h-12 items-center justify-between bg-primary-orange px-4 text-[10px] font-extrabold uppercase tracking-[0.12em] text-warm-white sm:hidden"
+          >
+            Book catering
+            <span aria-hidden="true">↗</span>
+          </Link>
+        </nav>
+      </div>
     </header>
   );
 }
