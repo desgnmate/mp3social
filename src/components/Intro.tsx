@@ -137,8 +137,12 @@ export function Intro() {
         tl.to(text1Ref.current!, { x: VW * 0.4, ease: "none", duration: 40 }, 0);
         tl.to(text1Ref.current!, { x: 0, ease: "none", duration: 20 }, 40);
 
-        // ── P2 lock ──
-        tl.to(text2Ref.current!, { x: VW * 2.5, ease: "none", duration: 250 }, 200);
+        // ── P2 lock: hold the entire three-polaroid sequence ──
+        tl.to(
+          text2Ref.current!,
+          { x: VW * 3.35, ease: "none", duration: 335 },
+          200,
+        );
 
         // ── 3 images ──
         const images = [
@@ -162,7 +166,7 @@ export function Intro() {
 
         images.forEach((img, i) => {
           if (!img) return;
-          const start = 205 + i * 140;
+          const start = 215 + i * 120;
 
           tl.to(
             img,
@@ -173,7 +177,7 @@ export function Intro() {
               opacity: 1,
               filter: "blur(0px)",
               ease: "power1.inOut",
-              duration: 60,
+              duration: 55,
             },
             start,
           );
@@ -186,14 +190,14 @@ export function Intro() {
               opacity: 0,
               filter: "blur(3px)",
               ease: "power1.inOut",
-              duration: 60,
+              duration: 55,
             },
-            start + 125,
+            start + 75,
           );
         });
 
         // ── P2 unlock, P4 lock ──
-        tl.to(text2Ref.current!, { x: 0, ease: "none", duration: 40 }, 450);
+        tl.to(text2Ref.current!, { x: 0, ease: "none", duration: 40 }, 535);
         tl.to(text4Ref.current!, { x: VW, ease: "none", duration: 100 }, 590);
       }, sectionRef);
 
