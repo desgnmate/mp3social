@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Archivo } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-archivo",
   display: "swap",
   weight: ["400", "500", "600", "700", "800", "900"],
 });
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og.png",
+        url: "/og-v2.png",
         width: 1200,
         height: 630,
         alt: "MP3 Social — Matcha Party in Third Spaces",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MP3 Social",
     description: "Matcha party in third spaces.",
-    images: ["/og.png"],
+    images: ["/og-v2.png"],
   },
 };
 
@@ -52,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={archivo.variable}>
       <body className="bg-warm-white text-dark-text">
         <div className="film-grain" aria-hidden="true" />
         {children}

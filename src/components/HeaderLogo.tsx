@@ -33,7 +33,7 @@ export function HeaderLogo() {
 
   return (
     <header
-      className={`left-0 right-0 top-0 z-[100] ${
+      className={`left-0 right-0 top-0 z-50 ${
         isEventsPage
           ? "absolute border-b border-transparent bg-transparent text-warm-white"
           : "sticky border-b border-dark-text/15 bg-warm-white text-dark-text"
@@ -66,7 +66,7 @@ export function HeaderLogo() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`relative flex min-h-11 items-center px-3 text-[10px] font-bold uppercase tracking-[0.12em] transition-colors after:absolute after:bottom-1.5 after:left-3 after:right-3 after:h-px after:origin-left after:bg-primary-orange after:transition-transform hover:text-primary-orange ${
+                className={`relative flex min-h-11 items-center px-3 text-xs font-semibold transition-colors after:absolute after:bottom-1.5 after:left-3 after:right-3 after:h-px after:origin-left after:bg-primary-orange after:transition-transform hover:text-primary-orange ${
                   active
                     ? "text-primary-orange after:scale-x-100"
                     : `${
@@ -83,14 +83,14 @@ export function HeaderLogo() {
         <div className="flex items-center justify-end gap-2">
           <Link
             href="/book-now"
-            className="hidden min-h-11 items-center gap-5 border border-primary-orange bg-primary-orange px-4 text-[10px] font-extrabold uppercase tracking-[0.11em] text-warm-white transition-colors hover:bg-burnt-orange sm:inline-flex"
+            className="hidden min-h-11 items-center gap-5 border border-primary-orange bg-primary-orange px-4 text-xs font-bold text-warm-white transition-colors hover:bg-dark-text hover:border-dark-text sm:inline-flex"
           >
             Book catering
             <span aria-hidden="true">↗</span>
           </Link>
           <button
             type="button"
-            className={`inline-flex min-h-11 min-w-[70px] items-center justify-center border px-3 text-[10px] font-extrabold uppercase tracking-[0.12em] transition-colors hover:border-primary-orange hover:text-primary-orange lg:hidden ${
+            className={`inline-flex min-h-11 min-w-[70px] items-center justify-center border px-3 text-xs font-bold transition-colors hover:border-primary-orange hover:text-primary-orange lg:hidden ${
               isEventsPage
                 ? "border-warm-white/45 text-warm-white"
                 : "border-dark-text/20 text-dark-text"
@@ -121,18 +121,18 @@ export function HeaderLogo() {
               key={item.href}
               href={item.href}
               aria-current={active ? "page" : undefined}
-              className={`flex min-h-14 items-center justify-between border-b border-dark-text/15 px-1 text-xs font-extrabold uppercase tracking-[0.11em] ${
+              className={`flex min-h-14 items-center justify-between border-b border-dark-text/15 px-1 text-sm font-bold ${
                 index % 2 === 0 ? "mr-3" : "ml-3"
               } ${active ? "text-primary-orange" : "text-dark-text"}`}
             >
               {item.label}
-              <span aria-hidden="true">{active ? "●" : "↗"}</span>
+              <span aria-hidden="true">↗</span>
             </Link>
           );
         })}
           <Link
             href="/book-now"
-            className="col-span-2 mt-4 flex min-h-12 items-center justify-between bg-primary-orange px-4 text-[10px] font-extrabold uppercase tracking-[0.12em] text-warm-white sm:hidden"
+            className="col-span-2 mt-4 flex min-h-12 items-center justify-between bg-primary-orange px-4 text-xs font-bold text-warm-white sm:hidden"
           >
             Book catering
             <span aria-hidden="true">↗</span>

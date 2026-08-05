@@ -17,7 +17,7 @@ export function EditorialMotion({ children }: { children: ReactNode }) {
       ).matches;
 
       if (reduceMotion) {
-        gsap.set("[data-hero-reveal], [data-reveal]", {
+        gsap.set("[data-hero-reveal], [data-reveal], [data-stagger] > *", {
           clearProps: "all",
           opacity: 1,
         });
@@ -26,31 +26,36 @@ export function EditorialMotion({ children }: { children: ReactNode }) {
 
       gsap
         .timeline({ defaults: { ease: "power3.out" } })
-        .from("[data-hero-reveal]", {
-          y: 42,
-          opacity: 0,
-          duration: 0.9,
-          stagger: 0.09,
-        })
-        .from(
-          "[data-hero-image]",
+        .fromTo(
+          "[data-hero-reveal]",
+          { y: 18 },
           {
-            clipPath: "inset(0 0 100% 0)",
-            scale: 1.04,
-            duration: 1.15,
+            y: 0,
+            duration: 0.62,
+            stagger: 0.055,
+            immediateRender: false,
           },
-          0.12,
+        )
+        .fromTo(
+          "[data-hero-image]",
+          { clipPath: "inset(4% 0 0 0)", scale: 1.018 },
+          {
+            clipPath: "inset(0 0 0% 0)",
+            scale: 1,
+            duration: 0.78,
+            immediateRender: false,
+          },
+          0.08,
         );
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
         gsap.from(element, {
-          y: 34,
-          opacity: 0,
-          duration: 0.85,
+          y: 16,
+          duration: 0.58,
           ease: "power3.out",
           scrollTrigger: {
             trigger: element,
-            start: "top 88%",
+            start: "top 90%",
             once: true,
           },
         });
@@ -58,14 +63,13 @@ export function EditorialMotion({ children }: { children: ReactNode }) {
 
       gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((group) => {
         gsap.from(Array.from(group.children), {
-          y: 28,
-          opacity: 0,
-          duration: 0.75,
-          stagger: 0.1,
+          y: 14,
+          duration: 0.55,
+          stagger: 0.06,
           ease: "power3.out",
           scrollTrigger: {
             trigger: group,
-            start: "top 84%",
+            start: "top 88%",
             once: true,
           },
         });
@@ -74,15 +78,15 @@ export function EditorialMotion({ children }: { children: ReactNode }) {
       gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((element) => {
         gsap.fromTo(
           element,
-          { yPercent: -4 },
+          { yPercent: -2 },
           {
-            yPercent: 4,
+            yPercent: 2,
             ease: "none",
             scrollTrigger: {
               trigger: element.parentElement,
               start: "top bottom",
               end: "bottom top",
-              scrub: 1.2,
+              scrub: 1.6,
             },
           },
         );

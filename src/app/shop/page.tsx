@@ -4,155 +4,123 @@ import Link from "next/link";
 import {
   EditorialHeading,
   EditorialKicker,
-  EditorialSerif,
   EditorialShell,
 } from "@/components/EditorialShell";
 
 export const metadata: Metadata = {
-  title: "Shop — MP3 Social",
+  title: "Shop | MP3 Social",
   description:
     "Small-run MP3 Social matcha kits, event passes and objects from the room.",
 };
 
 const DROPS = [
   {
-    number: "01",
     title: "Ceremonial matcha",
-    note: "The same bright, clean matcha we pour in the room—sized for your kitchen, desk or pre-rave ritual.",
+    note: "Bright, clean matcha sized for your kitchen, desk or pre-rave ritual.",
     state: "First drop soon",
     image: "/sticker-2.png",
-    color: "bg-primary-orange",
+    className: "md:col-span-7 bg-primary-orange",
   },
   {
-    number: "02",
     title: "Event passes",
-    note: "Entry to morning raves, listening sessions and whatever third space we take over next.",
+    note: "Entry to morning raves, listening sessions and the next third space.",
     state: "Released by event",
     image: "/sticker-1.png",
-    color: "bg-cream",
+    className: "md:col-span-5 bg-cream",
   },
   {
-    number: "03",
     title: "Room objects",
-    note: "Cups, tees and small-run evidence that you were there. Useful first; collectible second.",
+    note: "Cups, tees and small-run evidence that you were there. Useful first.",
     state: "Event-only for now",
     image: "/sticker-4.png",
-    color: "bg-warm-beige",
+    className: "md:col-span-12 bg-cream",
   },
 ];
 
 export default function ShopPage() {
   return (
     <EditorialShell
-      code="DROP / 001"
-      eyebrow="MP3 goods"
+      eyebrow="Small-run goods"
+      layout="catalogue"
       title={
         <>
-          THE MATCHA
+          Good things.
           <br />
-          <EditorialSerif>drop.</EditorialSerif>
+          <span className="text-primary-orange">Kept small.</span>
         </>
       }
-      intro="Small runs of good matcha, useful objects and passes to wherever we’re gathering next. No endless catalogue. No filler."
+      intro="Matcha, useful objects and passes to wherever we gather next. No endless catalogue. No filler."
       image="/calendar-bg.jpg"
-      imageAlt="MP3 Social matcha drinks and branded cups"
+      imageAlt="MP3 Social matcha drinks ready to serve"
       imagePosition="object-[54%_center]"
       primaryCta={{
         href: "mailto:hello@mp3social.com?subject=MP3%20drop%20list",
-        label: "Join the drop list",
+        label: "Join drop list",
       }}
-      secondaryCta={{ href: "/", label: "See the next event" }}
+      secondaryCta={{ href: "/", label: "See events" }}
     >
-      <section className="bg-warm-white px-5 py-24 md:px-10 md:py-36">
-        <div className="mx-auto max-w-6xl">
-          <div
-            data-reveal
-            className="grid gap-8 border-b border-primary-orange/30 pb-12 md:grid-cols-[0.7fr_1.3fr] md:items-end"
-          >
-            <EditorialKicker>In the queue</EditorialKicker>
-            <EditorialHeading>
-              GOOD THINGS.
-              <br />
-              <EditorialSerif className="text-primary-orange">
-                Kept small.
-              </EditorialSerif>
+      <section className="editorial-section">
+        <div className="page-container-wide">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+            <EditorialKicker>Coming next</EditorialKicker>
+            <EditorialHeading className="lg:col-span-8 lg:col-start-5">
+              Not a catalogue. <span className="text-primary-orange">A release schedule.</span>
             </EditorialHeading>
           </div>
 
-          <div data-stagger className="mt-2">
+          <div className="mt-16 grid gap-px overflow-hidden bg-dark-text/15 md:grid-cols-12" data-stagger>
             {DROPS.map((drop) => (
               <article
-                key={drop.number}
-                className="group grid gap-7 border-b border-primary-orange/30 py-8 md:grid-cols-[3rem_13rem_1fr_auto] md:items-center md:gap-9 md:py-10"
+                key={drop.title}
+                className={`group relative min-h-[28rem] overflow-hidden p-7 sm:p-9 ${drop.className}`}
               >
-                <span className="text-[10px] font-bold text-primary-orange/55">
-                  {drop.number}
-                </span>
-                <div
-                  className={`relative aspect-[4/3] overflow-hidden ${drop.color}`}
-                >
-                  <Image
-                    src={drop.image}
-                    alt=""
-                    fill
-                    sizes="208px"
-                    className="object-contain p-7 drop-shadow-xl transition-transform duration-500 group-hover:rotate-3 group-hover:scale-105"
-                  />
+                <Image
+                  src={drop.image}
+                  alt={`${drop.title} artwork`}
+                  fill
+                  sizes="(min-width: 768px) 58vw, 100vw"
+                  className="object-contain p-16 transition-transform duration-500 group-hover:rotate-3 group-hover:scale-105 sm:p-24"
+                />
+                <div className="relative z-[1] flex h-full min-h-[25rem] flex-col justify-between">
+                  <p className="text-xs font-semibold text-dark-text/65">{drop.state}</p>
+                  <div className="bg-warm-white/95 p-5 backdrop-blur-sm">
+                    <h2 className="heading-display text-3xl leading-none sm:text-4xl">
+                      {drop.title}
+                    </h2>
+                    <p className="mt-3 max-w-sm text-sm font-medium leading-relaxed text-dark-text/60">
+                      {drop.note}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="heading-display text-3xl text-dark-text md:text-4xl">
-                    {drop.title}
-                  </h2>
-                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-dark-text/60">
-                    {drop.note}
-                  </p>
-                </div>
-                <p className="justify-self-start border border-primary-orange/35 px-3 py-2 text-[9px] font-bold uppercase tracking-[0.14em] text-primary-orange md:justify-self-end">
-                  {drop.state}
-                </p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="grid bg-primary-orange text-warm-white lg:grid-cols-2">
-        <div className="relative min-h-[28rem] overflow-hidden lg:min-h-[42rem]">
-          <Image
-            src="/community-bg.jpg"
-            alt="The MP3 Social crowd at a daytime rave"
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover"
-            data-parallax
-          />
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-dark-text/20 mix-blend-multiply"
-          />
-        </div>
-        <div
-          data-reveal
-          className="flex flex-col justify-center px-5 py-20 md:px-12 lg:px-16"
-        >
-          <EditorialKicker light>Try it in the room</EditorialKicker>
-          <EditorialHeading light className="mt-8">
-            EVENT FIRST.
-            <br />
-            ONLINE
-            <br />
-            <EditorialSerif>after.</EditorialSerif>
-          </EditorialHeading>
-          <p className="mt-8 max-w-md text-sm leading-relaxed text-warm-white/72">
-            New pours and objects show up at MP3 events before they show up here.
-            Come dance, taste the drop and take home what earns a place.
-          </p>
-          <Link
-            href="/"
-            className="mt-9 inline-flex w-fit items-center gap-8 border border-warm-white px-5 py-4 text-[10px] font-extrabold uppercase tracking-[0.14em] transition-colors hover:bg-warm-white hover:text-primary-orange"
-          >
-            Find the next room <span aria-hidden="true">↗</span>
-          </Link>
+      <section className="editorial-section border-y border-dark-text/15">
+        <div className="page-container-wide grid gap-12 lg:grid-cols-12 lg:items-center">
+          <div className="relative min-h-[28rem] overflow-hidden lg:col-span-7 lg:min-h-[40rem]" data-reveal>
+            <Image
+              src="/community-bg.jpg"
+              alt="Crowd at MP3 Social daytime rave"
+              fill
+              sizes="(min-width: 1024px) 58vw, 100vw"
+              className="object-cover object-[61%_center]"
+              data-parallax
+            />
+          </div>
+          <div className="lg:col-span-4 lg:col-start-9" data-reveal>
+            <EditorialHeading className="max-w-[8ch]">
+              Event first. <span className="text-primary-orange">Online after.</span>
+            </EditorialHeading>
+            <p className="mt-7 max-w-md text-base font-medium leading-relaxed text-dark-text/65">
+              New pours and objects appear at MP3 events first. Dance, taste the drop and take home what earns a place.
+            </p>
+            <Link href="/" className="editorial-button mt-8">
+              See events <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
         </div>
       </section>
     </EditorialShell>

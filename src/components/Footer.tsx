@@ -1,100 +1,68 @@
-"use client";
-
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { Reveal } from "./Reveal";
+import Link from "next/link";
 
-const FOOTER_COLUMNS = [
-  {
-    items: [
-      { label: "HOME", href: "/" },
-      { label: "SHOP", href: "/shop" },
-      { label: "NEWSLETTER", href: "#" },
-    ],
-  },
-  {
-    items: [
-      { label: "FAQS", href: "/faqs" },
-      { label: "ABOUT", href: "/about" },
-      { label: "CONTACT", href: "/contact" },
-    ],
-  },
-  {
-    items: [
-      { label: "INDEX", href: "#" },
-      { label: "PRIVACY", href: "#" },
-      { label: "TERMS & CONDITIONS", href: "#" },
-    ],
-  },
-];
-
-const SOCIAL_ICONS = [
-  { label: "TikTok", path: "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.62a8.16 8.16 0 0 0 4.77 1.52V6.69a4.85 4.85 0 0 1-1.84 0z" },
-  { label: "Instagram", custom: true },
-  { label: "YouTube", path: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" },
+const LINKS = [
+  { label: "Events", href: "/" },
+  { label: "Catering", href: "/catering" },
+  { label: "Shop", href: "/shop" },
+  { label: "FAQs", href: "/faqs" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Footer() {
   return (
-    <footer
-      className="relative w-full overflow-hidden bg-primary-orange paper-texture"
-      aria-label="Footer"
-    >
-      <div className="dust-specks" />
-
-      <div className="relative w-full px-6 pt-20 pb-0 md:px-10 md:pt-28 lg:px-16 lg:pt-32">
-        <div className="flex flex-col items-center justify-center pt-6 md:flex-row md:items-center md:justify-between md:pt-0">
-          <Reveal>
-            <p className="text-[10px] font-bold uppercase tracking-[0.05em] text-warm-white md:text-xs">
-              MATCHA PARTY
+    <footer className="border-t border-dark-text/15 bg-warm-white text-dark-text">
+      <div className="page-container-wide py-16 md:py-24">
+        <div className="grid gap-14 lg:grid-cols-12 lg:items-start">
+          <div className="lg:col-span-5">
+            <Link
+              href="/"
+              aria-label="MP3 Social home"
+              className="relative block h-28 w-56 sm:h-36 sm:w-72"
+            >
+              <Image
+                src="/mp3-logo-new.png"
+                alt="MP3 Social"
+                fill
+                sizes="288px"
+                className="object-contain object-left"
+              />
+            </Link>
+            <p className="mt-6 max-w-sm text-base font-medium leading-relaxed text-dark-text/60">
+              Matcha parties, daytime energy and better reasons to gather.
             </p>
-          </Reveal>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.9 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative h-[12.1rem] w-[24.2rem] md:h-[16.1rem] md:w-[28.2rem] lg:h-[20.2rem] lg:w-[36.3rem]"
+          <nav
+            aria-label="Footer navigation"
+            className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3 lg:col-span-5 lg:col-start-7"
           >
-            <Image
-              src="/mp3-logo-new.png"
-              alt="MP3 Social"
-              fill
-              sizes="(min-width: 1024px) 52rem, (min-width: 768px) 40rem, 35rem"
-              className="object-contain"
-              quality={100}
-            />
-          </motion.div>
+            {LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="w-max border-b border-transparent py-1 text-sm font-semibold transition-colors hover:border-primary-orange hover:text-primary-orange"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
 
-          <Reveal delay={0.1}>
-            <p className="text-right text-[10px] font-bold uppercase tracking-[0.05em] text-warm-white md:text-xs">
-              IN THIRD SPACES
-            </p>
-          </Reveal>
+          <div className="lg:col-span-2">
+            <p className="text-sm font-semibold text-dark-text/50">General inbox</p>
+            <Link
+              href="mailto:hello@mp3social.com"
+              className="mt-3 block text-sm font-bold underline decoration-primary-orange underline-offset-4"
+            >
+              hello@mp3social.com
+            </Link>
+          </div>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-8 pt-10 pb-8 md:mt-16 md:grid-cols-3 md:gap-12 md:pt-12 md:pb-10">
-          {FOOTER_COLUMNS.map((col, i) => (
-            <ul key={i} className="flex flex-col gap-2 md:gap-2.5">
-              {col.items.map((item) => (
-                <li key={item.label}>
-                  <motion.a
-                    href={item.href}
-                    whileHover={{ x: 4 }}
-                    className="inline-block text-[10px] font-bold uppercase tracking-[0.05em] text-warm-white transition-opacity hover:opacity-80 md:text-[11px]"
-                  >
-                    {item.label}
-                  </motion.a>
-                </li>
-              ))}
-            </ul>
-          ))}
-        </div>
-
-        <div className="flex flex-col items-start justify-between gap-2 py-5 text-[9px] font-medium uppercase tracking-[0.05em] text-warm-white/70 md:flex-row md:items-center md:text-[10px]">
-          <p>Designed & developed by desgnmate.com</p>
-          <p>© 2026 MP3Social. All rights reserved.</p>
+        <div className="mt-16 flex flex-col gap-2 border-t border-dark-text/15 pt-6 text-xs font-medium text-dark-text/50 sm:flex-row sm:justify-between">
+          <p>© 2026 MP3 Social. All rights reserved.</p>
+          <p>Designed and developed by desgnmate.com</p>
         </div>
       </div>
     </footer>

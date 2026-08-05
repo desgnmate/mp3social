@@ -5,101 +5,119 @@ import { EditorialMotion } from "@/components/EditorialMotion";
 import { Footer } from "@/components/Footer";
 import { HeaderLogo } from "@/components/HeaderLogo";
 
-type HeroTone = "cream" | "orange" | "ink";
+type HeroLayout = "manifesto" | "catalogue" | "index" | "contact" | "brief";
 
 type EditorialShellProps = {
-  code: string;
+  code?: string;
   eyebrow: string;
   title: ReactNode;
   intro: string;
   image: string;
   imageAlt: string;
   children: ReactNode;
-  tone?: HeroTone;
+  layout?: HeroLayout;
   compact?: boolean;
   imagePosition?: string;
   primaryCta?: { href: string; label: string };
   secondaryCta?: { href: string; label: string };
+  tone?: "cream" | "orange" | "ink";
 };
 
-const TONES: Record<
-  HeroTone,
-  { section: string; muted: string; link: string; frame: string }
+const LAYOUTS: Record<
+  HeroLayout,
+  { grid: string; copy: string; media: string; title: string }
 > = {
-  cream: {
-    section: "bg-cream text-dark-text",
-    muted: "text-dark-text/65",
-    link: "text-primary-orange",
-    frame: "border-primary-orange/25",
+  manifesto: {
+    grid: "lg:grid-cols-12",
+    copy: "lg:col-span-7 lg:col-start-1 lg:row-start-1 lg:pt-4",
+    media:
+      "lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:mt-14 lg:min-h-[30rem]",
+    title: "max-w-[9ch]",
   },
-  orange: {
-    section: "bg-primary-orange text-warm-white",
-    muted: "text-warm-white/72",
-    link: "text-warm-white",
-    frame: "border-warm-white/35",
+  catalogue: {
+    grid: "lg:grid-cols-12",
+    copy: "lg:col-span-7 lg:col-start-1 lg:row-start-1 lg:pb-20",
+    media:
+      "lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:mt-6 lg:min-h-[34rem]",
+    title: "max-w-[9ch]",
   },
-  ink: {
-    section: "bg-dark-text text-warm-white",
-    muted: "text-warm-white/65",
-    link: "text-primary-orange",
-    frame: "border-primary-orange/50",
+  index: {
+    grid: "lg:grid-cols-12",
+    copy: "lg:col-span-8 lg:col-start-5 lg:row-start-1 lg:pl-8",
+    media:
+      "lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mb-14 lg:min-h-[30rem]",
+    title: "max-w-[9ch]",
+  },
+  contact: {
+    grid: "lg:grid-cols-12",
+    copy: "lg:col-span-7 lg:col-start-1 lg:row-start-1",
+    media:
+      "lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:mb-12 lg:mt-14 lg:min-h-[30rem]",
+    title: "max-w-[10ch]",
+  },
+  brief: {
+    grid: "lg:grid-cols-12",
+    copy: "lg:col-span-7 lg:col-start-1 lg:row-start-1",
+    media:
+      "lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:min-h-[32rem]",
+    title: "max-w-[9ch]",
   },
 };
 
 export function EditorialShell({
-  code,
   eyebrow,
   title,
   intro,
   image,
   imageAlt,
   children,
-  tone = "cream",
+  layout = "manifesto",
   compact = false,
   imagePosition = "object-center",
   primaryCta,
   secondaryCta,
+  tone = "cream",
 }: EditorialShellProps) {
-  const palette = TONES[tone];
+  const composition = LAYOUTS[layout];
+  const heroTone = tone === "ink" ? "bg-dark-text text-warm-white" : "bg-warm-white text-dark-text";
+  const introTone = tone === "ink" ? "text-warm-white/72" : "text-dark-text/70";
 
   return (
-    <div className="min-h-screen bg-warm-white text-dark-text">
+    <div className="min-h-[100dvh] bg-warm-white text-dark-text">
       <HeaderLogo />
       <EditorialMotion>
         <main>
           <section
-            className={`relative isolate overflow-hidden ${palette.section}`}
+            className={`relative overflow-hidden border-b border-dark-text/15 ${heroTone}`}
             aria-labelledby="editorial-page-title"
           >
             <div
-              className={`page-container-wide grid items-stretch gap-12 py-14 md:py-20 lg:grid-cols-[minmax(0,1.04fr)_minmax(24rem,0.96fr)] lg:gap-16 ${
-                compact
-                  ? "lg:min-h-[36rem] lg:py-24"
-                  : "lg:min-h-[calc(100svh-80px)] lg:py-24"
+              className={`page-container-wide grid gap-8 py-10 sm:py-12 lg:gap-8 lg:py-14 ${composition.grid} ${
+                compact ? "lg:min-h-[36rem]" : "lg:min-h-[calc(100dvh-80px)]"
               }`}
             >
-              <div className="flex min-w-0 flex-col">
-                <div
+              <div
+                className={`relative z-[1] flex min-w-0 flex-col ${composition.copy}`}
+              >
+                <p
                   data-hero-reveal
-                  className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.16em]"
+                  className="max-w-max border-b border-primary-orange pb-2 text-xs font-semibold text-primary-orange"
                 >
-                  <span className={palette.link}>{code}</span>
-                  <span aria-hidden="true" className="h-px w-8 bg-current opacity-35" />
-                  <span className="opacity-65">{eyebrow}</span>
-                </div>
+                  {eyebrow}
+                </p>
 
                 <h1
                   id="editorial-page-title"
                   data-hero-reveal
-                  className="heading-display mt-12 max-w-[10ch] text-[clamp(3.75rem,8.6vw,8.8rem)] leading-[0.76] tracking-[-0.075em] sm:mt-16"
+                  className={`editorial-hero-title heading-display mt-8 text-balance leading-[0.86] tracking-[-0.068em] sm:mt-10 ${composition.title}`}
                 >
                   {title}
                 </h1>
 
-                <div className="mt-auto pt-12 sm:pt-16 lg:pt-20">
+                <div className="mt-9 max-w-xl lg:mt-auto lg:pt-10">
                   <p
                     data-hero-reveal
-                    className={`max-w-xl text-base leading-relaxed md:text-lg ${palette.muted}`}
+                    className={`max-w-[52ch] text-base font-medium leading-relaxed md:text-lg ${introTone}`}
                   >
                     {intro}
                   </p>
@@ -107,32 +125,21 @@ export function EditorialShell({
                   {(primaryCta || secondaryCta) && (
                     <div
                       data-hero-reveal
-                      className="mt-8 flex flex-wrap items-center gap-5"
+                      className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4"
                     >
                       {primaryCta && (
-                        <Link
-                          href={primaryCta.href}
-                          className={`group inline-flex min-h-12 items-center gap-8 border px-5 text-[10px] font-extrabold uppercase tracking-[0.14em] transition-colors ${
-                            tone === "orange"
-                              ? "border-warm-white bg-warm-white text-primary-orange hover:bg-transparent hover:text-warm-white"
-                              : "border-primary-orange bg-primary-orange text-warm-white hover:bg-burnt-orange"
-                          }`}
-                        >
+                        <Link href={primaryCta.href} className="editorial-button">
                           {primaryCta.label}
-                          <span
-                            aria-hidden="true"
-                            className="transition-transform group-hover:translate-x-1"
-                          >
-                            ↗
-                          </span>
+                          <span aria-hidden="true">↗</span>
                         </Link>
                       )}
                       {secondaryCta && (
                         <Link
                           href={secondaryCta.href}
-                          className={`text-[10px] font-extrabold uppercase tracking-[0.14em] underline decoration-current/35 underline-offset-8 transition-opacity hover:opacity-60 ${palette.link}`}
+                          className="editorial-text-link"
                         >
                           {secondaryCta.label}
+                          <span aria-hidden="true">↗</span>
                         </Link>
                       )}
                     </div>
@@ -142,7 +149,7 @@ export function EditorialShell({
 
               <div
                 data-hero-image
-                className={`relative min-h-[26rem] overflow-hidden border sm:min-h-[34rem] lg:min-h-0 ${palette.frame}`}
+                className={`relative min-h-[22rem] overflow-hidden bg-cream sm:min-h-[28rem] ${composition.media}`}
               >
                 <Image
                   src={image}
@@ -154,11 +161,8 @@ export function EditorialShell({
                 />
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-dark-text/35 via-transparent to-transparent"
+                  className="absolute inset-0 bg-dark-text/5 mix-blend-multiply"
                 />
-                <p className="absolute bottom-5 left-5 text-[10px] font-bold uppercase tracking-[0.16em] text-warm-white">
-                  MP3 Social / Melbourne
-                </p>
               </div>
             </div>
           </section>
@@ -170,19 +174,9 @@ export function EditorialShell({
   );
 }
 
-export function EditorialKicker({
-  children,
-  light = false,
-}: {
-  children: ReactNode;
-  light?: boolean;
-}) {
+export function EditorialKicker({ children }: { children: ReactNode; light?: boolean }) {
   return (
-    <p
-      className={`text-[10px] font-bold uppercase tracking-[0.16em] ${
-        light ? "text-warm-white/58" : "text-primary-orange"
-      }`}
-    >
+    <p className="max-w-max border-b border-primary-orange pb-2 text-xs font-semibold text-primary-orange">
       {children}
     </p>
   );
@@ -190,7 +184,6 @@ export function EditorialKicker({
 
 export function EditorialHeading({
   children,
-  light = false,
   className = "",
 }: {
   children: ReactNode;
@@ -199,9 +192,7 @@ export function EditorialHeading({
 }) {
   return (
     <h2
-      className={`heading-display text-[clamp(3rem,7vw,7rem)] leading-[0.8] tracking-[-0.06em] ${
-        light ? "text-warm-white" : "text-dark-text"
-      } ${className}`}
+      className={`editorial-section-title heading-display text-balance leading-[0.88] tracking-[-0.055em] text-dark-text ${className}`}
     >
       {children}
     </h2>
@@ -217,7 +208,7 @@ export function EditorialSerif({
 }) {
   return (
     <span
-      className={`font-serif font-normal italic normal-case tracking-[-0.055em] ${className}`}
+      className={`inline-block pb-1 font-sans font-black italic normal-case leading-[1.08] tracking-[-0.06em] ${className}`}
     >
       {children}
     </span>
