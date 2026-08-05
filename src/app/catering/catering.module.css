@@ -181,6 +181,17 @@
   text-transform: uppercase;
 }
 
+.sectionHeading h2 .headingLine {
+  display: block;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.sectionHeading h2 > span:last-child {
+  display: block;
+  white-space: nowrap;
+}
+
 .menuComposition {
   display: grid;
   grid-template-columns: 1.12fr 0.88fr;

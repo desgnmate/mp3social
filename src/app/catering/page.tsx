@@ -242,7 +242,7 @@ export default function CateringPage() {
 
           <section className={styles.section} aria-labelledby="booking-title">
             <div className={styles.sectionHeading} data-catering-reveal>
-              <h2 id="booking-title">Choose your <span>volume.</span></h2>
+              <h2 id="booking-title"><span className={styles.headingLine}>Choose your</span><span>volume.</span></h2>
               <p>Two starting points. Every detail scales with the room.</p>
             </div>
             <div className={styles.modeGrid} data-catering-reveal>
