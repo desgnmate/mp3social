@@ -90,12 +90,12 @@ export default function FAQsPage() {
         </div>
       </section>
 
-      <section className="editorial-section border-y border-dark-text/15">
-        <div className="page-container-wide grid gap-10 lg:grid-cols-12 lg:items-end">
-          <h2 className="editorial-statement heading-display text-balance leading-[0.88] tracking-[-0.055em] lg:col-span-9" data-reveal>
-            Date. City. Guests. <span className="text-primary-orange">We handle the rest.</span>
+      <section className="editorial-section pt-0">
+        <div className="fresh-cta-band page-container-wide grid gap-10 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-12 lg:items-end">
+          <h2 className="section-title-clamp editorial-statement heading-display text-balance leading-[0.88] tracking-[-0.055em] text-warm-white lg:col-span-9" data-reveal>
+            Date. City. Guests. <span className="text-warm-white">We handle the rest.</span>
           </h2>
-          <Link href="/book-now" className="editorial-button lg:col-span-3 lg:justify-self-end">
+          <Link href="/book-now" className="editorial-button border-warm-white bg-warm-white text-primary-orange hover:border-dark-text lg:col-span-3 lg:justify-self-end">
             Book catering <span aria-hidden="true">↗</span>
           </Link>
         </div>

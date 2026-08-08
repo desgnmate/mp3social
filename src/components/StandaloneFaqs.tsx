@@ -29,16 +29,16 @@ export function StandaloneFaqs({ items }: { items: StandaloneFaq[] }) {
   }, [openIndex]);
 
   return (
-    <div className="border-t border-dark-text/20">
+    <div className="grid gap-3">
       {items.map((item, index) => {
         const isOpen = openIndex === index;
         const answerId = `standalone-faq-answer-${index}`;
 
         return (
-          <article key={item.question} className="border-b border-dark-text/20">
+          <article key={item.question} className={`overflow-hidden rounded-[1.25rem] border border-dark-text/10 transition-colors ${isOpen ? "bg-cream" : "bg-warm-white hover:bg-cream/60"}`}>
             <button
               type="button"
-              className="group grid w-full grid-cols-[1fr_auto] items-start gap-6 py-7 text-left md:py-9"
+              className="group grid w-full grid-cols-[1fr_auto] items-start gap-6 px-5 py-6 text-left sm:px-7 md:py-7"
               aria-expanded={isOpen}
               aria-controls={answerId}
               onClick={() => setOpenIndex(isOpen ? -1 : index)}
@@ -48,8 +48,8 @@ export function StandaloneFaqs({ items }: { items: StandaloneFaq[] }) {
               </span>
               <span
                 aria-hidden="true"
-                className={`flex h-10 w-10 items-center justify-center border border-dark-text/30 text-xl transition-[transform,background-color,color] duration-300 ${
-                  isOpen ? "rotate-45 bg-primary-orange text-warm-white" : ""
+                className={`flex h-10 w-10 items-center justify-center rounded-full border border-dark-text/30 text-xl transition-[transform,background-color,color] duration-300 ${
+                  isOpen ? "rotate-45 border-primary-orange bg-primary-orange text-warm-white" : ""
                 }`}
               >
                 +
@@ -63,7 +63,7 @@ export function StandaloneFaqs({ items }: { items: StandaloneFaq[] }) {
               }}
               className="h-0 overflow-hidden opacity-0"
             >
-              <div className="grid gap-3 pb-9 md:grid-cols-[8rem_1fr] md:gap-10 md:pb-11">
+              <div className="grid gap-3 px-5 pb-7 sm:px-7 md:grid-cols-[8rem_1fr] md:gap-10">
                 <p className="text-xs font-semibold text-primary-orange">
                   {item.category}
                 </p>

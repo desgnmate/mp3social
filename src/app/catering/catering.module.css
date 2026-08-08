@@ -42,6 +42,17 @@
   font-weight: 700;
 }
 
+.sectionHeading h2,
+.raveCopy h2,
+.faqGrid > h2,
+.finalCta h2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
 .hero h1,
 .sectionHeading h2,
 .raveCopy h2,
@@ -182,14 +193,7 @@
 }
 
 .sectionHeading h2 .headingLine {
-  display: block;
   color: var(--ink);
-  white-space: nowrap;
-}
-
-.sectionHeading h2 > span:last-child {
-  display: block;
-  white-space: nowrap;
 }
 
 .menuComposition {
@@ -647,5 +651,232 @@
   .faqIcon,
   .faqPanel {
     transition: none;
+  }
+}
+
+/* Image-led beverage editorial system */
+.hero {
+  position: relative;
+  display: block;
+  min-height: min(46rem, calc(100dvh - 6rem));
+  margin-top: 0.75rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  overflow: hidden;
+  border-radius: 1.5rem;
+  color: var(--paper);
+  isolation: isolate;
+}
+
+.hero::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(44 34 27 / 0.06) 22%, rgb(44 34 27 / 0.25) 58%, rgb(44 34 27 / 0.86) 100%),
+    linear-gradient(90deg, rgb(44 34 27 / 0.2), transparent 62%);
+  content: "";
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 2;
+  min-height: calc(min(46rem, calc(100dvh - 6rem)) - clamp(3rem, 6vw, 5rem));
+}
+
+.hero .kicker {
+  border-color: rgb(247 244 238 / 0.7);
+  color: var(--paper);
+}
+
+.hero h1 {
+  max-width: 8ch;
+  margin-top: auto;
+  padding-top: 8rem;
+  color: var(--paper);
+}
+
+.heroBottom {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(28rem, 40%);
+  margin: 0;
+  padding: 1.5rem;
+  border: 1px solid rgb(247 244 238 / 0.72);
+  border-radius: 1.25rem;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 18px 50px rgb(44 34 27 / 0.22);
+}
+
+.heroBottom > p {
+  color: rgb(44 34 27 / 0.7);
+  font-size: 0.95rem;
+}
+
+.heroMedia {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  min-height: 0;
+}
+
+.button,
+.modeLink {
+  border-radius: 999px;
+}
+
+.sectionHeading {
+  align-items: center;
+}
+
+.sectionHeading h2,
+.raveCopy h2,
+.faqGrid > h2 {
+  max-width: 12ch;
+}
+
+.menuComposition {
+  gap: 1rem;
+}
+
+.menuMedia,
+.raveMedia {
+  border-radius: 1.5rem;
+}
+
+.menuList {
+  border: 1px solid rgb(44 34 27 / 0.12);
+  border-radius: 1.5rem;
+  background: var(--cream);
+}
+
+.raveComposition {
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.modeGrid {
+  gap: 1rem;
+  border: 0;
+}
+
+.modeGrid > article {
+  overflow: hidden;
+  border: 1px solid rgb(44 34 27 / 0.14);
+  border-radius: 1.5rem;
+  background: var(--cream);
+}
+
+.modeGrid > article + article {
+  border-left: 1px solid rgb(44 34 27 / 0.14);
+}
+
+.modeGrid > .modeFeatured {
+  background: var(--orange);
+}
+
+.process {
+  gap: 1rem;
+  margin-top: 1rem;
+  background: transparent;
+}
+
+.process li {
+  border: 1px solid rgb(44 34 27 / 0.1);
+  border-radius: 1.25rem;
+  background: var(--cream);
+}
+
+.faqList {
+  display: grid;
+  gap: 0.75rem;
+  border: 0;
+}
+
+.faqItem {
+  overflow: hidden;
+  border: 1px solid rgb(44 34 27 / 0.1);
+  border-radius: 1.25rem;
+  background: var(--cream);
+  padding-inline: 1.25rem;
+}
+
+.faqIcon {
+  border-radius: 999px;
+}
+
+.finalCta {
+  margin-bottom: 1.25rem;
+  padding: clamp(2.5rem, 6vw, 5rem);
+  border: 0;
+  border-radius: 1.5rem;
+  background: var(--orange);
+  color: var(--paper);
+}
+
+.finalCta h2,
+.finalCta h2 span,
+.finalCta > div > p {
+  color: var(--paper);
+}
+
+.finalCta > div {
+  border-color: rgb(247 244 238 / 0.45);
+}
+
+.finalCta .button {
+  border-color: var(--paper);
+  background: var(--paper);
+  color: var(--orange);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 44rem;
+    margin-inline: 0.75rem;
+    padding: 1.25rem;
+  }
+
+  .heroCopy {
+    min-height: 41.5rem;
+    padding-bottom: 0;
+  }
+
+  .hero h1 {
+    padding-top: 7rem;
+  }
+
+  .heroBottom {
+    position: static;
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .menuList {
+    border: 1px solid rgb(44 34 27 / 0.12);
+  }
+
+  .modeGrid > article + article {
+    border: 1px solid rgb(44 34 27 / 0.14);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    min-height: 43rem;
+    margin-top: 0.75rem;
+    padding-top: 1.25rem;
+  }
+
+  .heroCopy {
+    min-height: 40.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.5rem, 16vw, 5rem);
+  }
+
+  .finalCta {
+    margin-inline: 0.75rem;
   }
 }

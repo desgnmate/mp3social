@@ -39,6 +39,11 @@ export function HeaderLogo() {
           : "sticky border-b border-dark-text/15 bg-warm-white text-dark-text"
       }`}
     >
+      {!isEventsPage && (
+        <div className="flex min-h-6 items-center justify-center bg-primary-orange px-4 py-1 text-center text-[0.625rem] font-bold uppercase tracking-[0.14em] text-warm-white">
+          Matcha bars · daytime raves · made for rooms that want more energy
+        </div>
+      )}
       <div className="grid min-h-[72px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-5 lg:min-h-[80px] lg:px-8">
         <Link
           href="/"
@@ -83,14 +88,14 @@ export function HeaderLogo() {
         <div className="flex items-center justify-end gap-2">
           <Link
             href="/book-now"
-            className="hidden min-h-11 items-center gap-5 border border-primary-orange bg-primary-orange px-4 text-xs font-bold text-warm-white transition-colors hover:bg-dark-text hover:border-dark-text sm:inline-flex"
+            className="hidden min-h-11 items-center gap-5 rounded-full border border-primary-orange bg-primary-orange px-5 text-xs font-bold text-warm-white transition-colors hover:border-dark-text hover:bg-dark-text sm:inline-flex"
           >
             Book catering
             <span aria-hidden="true">↗</span>
           </Link>
           <button
             type="button"
-            className={`inline-flex min-h-11 min-w-[70px] items-center justify-center border px-3 text-xs font-bold transition-colors hover:border-primary-orange hover:text-primary-orange lg:hidden ${
+            className={`inline-flex min-h-11 min-w-[70px] items-center justify-center rounded-full border px-3 text-xs font-bold transition-colors hover:border-primary-orange hover:text-primary-orange lg:hidden ${
               isEventsPage
                 ? "border-warm-white/45 text-warm-white"
                 : "border-dark-text/20 text-dark-text"

@@ -68,11 +68,11 @@ export default function ShopPage() {
             </EditorialHeading>
           </div>
 
-          <div className="mt-16 grid gap-px overflow-hidden bg-dark-text/15 md:grid-cols-12" data-stagger>
+          <div className="fresh-card-grid mt-16 md:grid-cols-12" data-stagger>
             {DROPS.map((drop) => (
               <article
                 key={drop.title}
-                className={`group relative min-h-[28rem] overflow-hidden p-7 sm:p-9 ${drop.className}`}
+                className={`fresh-card group relative min-h-[28rem] p-7 sm:p-9 ${drop.className}`}
               >
                 <Image
                   src={drop.image}
@@ -83,7 +83,7 @@ export default function ShopPage() {
                 />
                 <div className="relative z-[1] flex h-full min-h-[25rem] flex-col justify-between">
                   <p className="text-xs font-semibold text-dark-text/65">{drop.state}</p>
-                  <div className="bg-warm-white/95 p-5 backdrop-blur-sm">
+                  <div className="rounded-[1rem] bg-warm-white/95 p-5 backdrop-blur-sm">
                     <h2 className="heading-display text-3xl leading-none sm:text-4xl">
                       {drop.title}
                     </h2>
@@ -98,9 +98,9 @@ export default function ShopPage() {
         </div>
       </section>
 
-      <section className="editorial-section border-y border-dark-text/15">
+      <section className="editorial-section bg-cream/50">
         <div className="page-container-wide grid gap-12 lg:grid-cols-12 lg:items-center">
-          <div className="relative min-h-[28rem] overflow-hidden lg:col-span-7 lg:min-h-[40rem]" data-reveal>
+          <div className="fresh-media relative min-h-[28rem] lg:col-span-7 lg:min-h-[40rem]" data-reveal>
             <Image
               src="/community-bg.jpg"
               alt="Crowd at MP3 Social daytime rave"

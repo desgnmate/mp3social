@@ -74,7 +74,7 @@ export default function AboutPage() {
 
       <section className="editorial-section !pt-0">
         <div className="page-container-wide">
-          <div className="relative min-h-[32rem] overflow-hidden sm:min-h-[42rem]" data-reveal>
+          <div className="fresh-media relative min-h-[32rem] sm:min-h-[42rem]" data-reveal>
             <Image
               src="/hero-bg-web.jpg"
               alt="Crowd filling an MP3 Social daytime event"
@@ -95,22 +95,25 @@ export default function AboutPage() {
           <EditorialHeading className="max-w-[9ch]">
             Three things hold <span className="text-primary-orange">every room.</span>
           </EditorialHeading>
-          <div className="mt-14 grid gap-8 md:grid-cols-12" data-stagger>
+          <div className="fresh-card-grid mt-14 md:grid-cols-12" data-stagger>
             {PRINCIPLES.map((principle, index) => (
               <article
                 key={principle.title}
-                className={`border-t border-dark-text/20 pt-6 ${
+                className={`fresh-card min-h-[22rem] p-6 sm:p-8 ${
                   index === 0
-                    ? "md:col-span-5"
+                    ? "bg-primary-orange text-warm-white md:col-span-5"
                     : index === 1
-                      ? "md:col-span-3 md:mt-12"
-                      : "md:col-span-4 md:mt-5"
+                      ? "bg-cream md:col-span-3 md:mt-12"
+                      : "bg-cream-beige md:col-span-4 md:mt-5"
                 }`}
               >
-                <h2 className="heading-display text-5xl leading-none text-dark-text md:text-6xl">
+                <p className={`text-xs font-bold uppercase tracking-[0.14em] ${index === 0 ? "text-warm-white/70" : "text-primary-orange"}`}>
+                  0{index + 1}
+                </p>
+                <h2 className={`heading-display mt-20 text-5xl leading-none md:text-6xl ${index === 0 ? "text-warm-white" : "text-dark-text"}`}>
                   {principle.title}
                 </h2>
-                <p className="mt-5 max-w-xs text-base font-medium leading-relaxed text-dark-text/60">
+                <p className={`mt-5 max-w-xs text-base font-medium leading-relaxed ${index === 0 ? "text-warm-white/75" : "text-dark-text/60"}`}>
                   {principle.note}
                 </p>
               </article>
@@ -119,15 +122,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="editorial-section">
-        <div className="page-container-wide grid gap-12 lg:grid-cols-12 lg:items-end">
+      <section className="editorial-section pt-0">
+        <div className="fresh-cta-band page-container-wide grid gap-12 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-12 lg:items-end">
           <blockquote
-            className="editorial-statement heading-display max-w-[13ch] leading-[0.9] tracking-[-0.055em] lg:col-span-9"
+            className="section-title-clamp editorial-statement heading-display max-w-[13ch] leading-[0.9] tracking-[-0.055em] text-warm-white lg:col-span-9"
             data-reveal
           >
             “The best room is one you leave with more energy than you brought.”
           </blockquote>
-          <Link href="/contact" className="editorial-button lg:col-span-3 lg:justify-self-end">
+          <Link href="/contact" className="editorial-button border-warm-white bg-warm-white text-primary-orange hover:border-dark-text lg:col-span-3 lg:justify-self-end">
             Contact us <span aria-hidden="true">↗</span>
           </Link>
         </div>

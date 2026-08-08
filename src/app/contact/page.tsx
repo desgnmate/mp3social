@@ -59,17 +59,17 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="mt-16 grid gap-px overflow-hidden bg-dark-text/15 lg:grid-cols-12" data-stagger>
+          <div className="fresh-card-grid mt-16 lg:grid-cols-12" data-stagger>
             {CONTACTS.map((contact, index) => (
               <Link
                 key={contact.label}
                 href={contact.href}
-                className={`group flex min-h-[19rem] flex-col justify-between bg-warm-white p-7 transition-colors hover:bg-primary-orange hover:text-warm-white sm:p-9 ${
+                className={`fresh-card group flex min-h-[19rem] flex-col justify-between p-7 transition-[background-color,color,transform] hover:-translate-y-1 hover:bg-primary-orange hover:text-warm-white sm:p-9 ${
                   index === 0
-                    ? "lg:col-span-5"
+                    ? "bg-cream lg:col-span-5"
                     : index === 1
-                      ? "lg:col-span-3"
-                      : "lg:col-span-4"
+                      ? "bg-primary-orange text-warm-white lg:col-span-3"
+                      : "bg-cream-beige lg:col-span-4"
                 }`}
               >
                 <span className="text-2xl transition-transform group-hover:translate-x-1" aria-hidden="true">
@@ -89,20 +89,20 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="editorial-section border-y border-dark-text/15">
-        <div className="page-container-wide grid gap-12 lg:grid-cols-12 lg:items-end">
+      <section className="editorial-section pt-0">
+        <div className="fresh-cta-band page-container-wide grid gap-12 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8" data-reveal>
-            <h2 className="editorial-statement heading-display text-balance leading-[0.88] tracking-[-0.055em]">
+            <h2 className="section-title-clamp editorial-statement heading-display text-balance leading-[0.88] tracking-[-0.055em] text-warm-white">
               Idea. People.
               <br />
-              Place. <span className="text-primary-orange">Timing.</span>
+              Place. <span className="text-warm-white">Timing.</span>
             </h2>
           </div>
           <div className="lg:col-span-3 lg:col-start-10" data-reveal>
-            <p className="text-base font-medium leading-relaxed text-dark-text/65">
+            <p className="text-base font-medium leading-relaxed text-warm-white/75">
               Tell us what you are making, who it serves, where it happens, preferred timing and MP3&apos;s role.
             </p>
-            <p className="mt-6 border-l-2 border-primary-orange pl-4 text-sm font-semibold text-primary-orange">
+            <p className="mt-6 border-l-2 border-warm-white pl-4 text-sm font-semibold text-warm-white">
               Usually back within two business days.
             </p>
           </div>
