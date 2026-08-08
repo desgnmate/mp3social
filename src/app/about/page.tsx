@@ -31,8 +31,8 @@ const PRINCIPLES = [
 export default function AboutPage() {
   return (
     <EditorialShell
-      eyebrow="About MP3 Social"
       layout="manifesto"
+      heroVariant="content"
       title={
         <>
           More human.
@@ -82,6 +82,7 @@ export default function AboutPage() {
               sizes="100vw"
               className="object-cover object-center"
               data-parallax
+              loading="lazy"
             />
           </div>
           <p className="mt-4 max-w-lg text-sm leading-relaxed text-dark-text/55">

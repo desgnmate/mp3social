@@ -7,7 +7,6 @@ import { HeaderLogo } from "@/components/HeaderLogo";
 type NavMode = "main" | "catering";
 
 type SubpageShellProps = {
-  eyebrow: string;
   title: string;
   intro: string;
   image: string;
@@ -29,7 +28,6 @@ type SubpageShellProps = {
  * Uses design tokens from globals.css (.page-container, .section-pad, type roles).
  */
 export function SubpageShell({
-  eyebrow,
   title,
   intro,
   image,
@@ -60,9 +58,6 @@ export function SubpageShell({
             {/* Meta row */}
             <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
               <p className="label-caps text-primary-orange/70">{index}</p>
-              <p className="label-caps hidden text-primary-orange/70 sm:block">
-                {eyebrow}
-              </p>
               <Link
                 href={backHref}
                 className="label-caps text-primary-orange transition-opacity hover:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-orange"
@@ -122,9 +117,6 @@ export function SubpageShell({
                   className="absolute inset-0 bg-gradient-to-t from-dark-text/40 via-transparent to-dark-text/10"
                   aria-hidden="true"
                 />
-                <div className="absolute left-4 top-4 border border-primary-orange/25 bg-cream px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-primary-orange md:left-5 md:top-5 md:px-4 md:py-2">
-                  MP3 / {eyebrow}
-                </div>
               </div>
             </div>
           </div>
@@ -158,7 +150,7 @@ export function DisplayHeading({
   return (
     <h2
       id={id}
-      className={`heading-display mt-3 text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[0.9] tracking-[-0.045em] ${
+      className={`section-title-clamp heading-display mt-3 text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[0.9] tracking-[-0.045em] ${
         light ? "text-warm-white" : "text-primary-orange"
       } ${className}`}
     >
@@ -185,7 +177,7 @@ export function PageCTA({
         aria-hidden="true"
       />
       <div className="page-container section-pad-y relative text-center">
-        <h2 className="heading-display mx-auto max-w-[16ch] text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.88] tracking-[-0.05em]">
+        <h2 className="section-title-clamp heading-display mx-auto max-w-[16ch] text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.88] tracking-[-0.05em]">
           {title}
         </h2>
         <p className="mx-auto mt-6 max-w-md text-base leading-relaxed text-warm-white/70">

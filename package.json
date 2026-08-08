@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NEXT_DIST_DIR=.next next dev",
-    "build": "next build",
+    "dev": "NEXT_DIST_DIR=.next next dev --turbopack",
+    "build": "NEXT_DIST_DIR=dist next build",
     "postbuild": "node scripts/create-sites-worker.mjs",
-    "start": "next start",
+    "start": "NEXT_DIST_DIR=dist next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },

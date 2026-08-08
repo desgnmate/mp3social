@@ -212,7 +212,8 @@ export function Calendar() {
               fill
               sizes="(min-width: 1024px) 45vw, 100vw"
               className="object-cover transition-transform duration-700"
-              quality={88}
+              quality={78}
+              loading="lazy"
             />
             <div
               className="absolute inset-0 bg-gradient-to-t from-dark-text/90 via-dark-text/10 to-dark-text/30"

@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Footer } from "@/components/Footer";
 import { HeaderLogo } from "@/components/HeaderLogo";
+import { Hero } from "@/components/Hero";
 import styles from "./catering.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -95,27 +96,18 @@ function CateringMotion({ children }: { children: React.ReactNode }) {
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduced) return;
 
-      gsap.timeline({ defaults: { ease: "power3.out" } })
-        .fromTo("[data-catering-hero]", { y: 18 }, {
-          y: 0,
-          duration: 0.62,
-          stagger: 0.055,
-          immediateRender: false,
-        })
-        .fromTo("[data-catering-image]", {
-          clipPath: "inset(4% 0 0 0)",
-          scale: 1.018,
-        }, {
-          clipPath: "inset(0 0 0% 0)",
-          scale: 1,
-          duration: 0.78,
-          immediateRender: false,
-        }, 0.08);
+      gsap.fromTo("[data-catering-hero]", { y: 10 }, {
+        y: 0,
+        duration: 0.32,
+        stagger: 0.03,
+        ease: "power3.out",
+        immediateRender: false,
+      });
 
       gsap.utils.toArray<HTMLElement>("[data-catering-reveal]").forEach((element) => {
         gsap.from(element, {
-          y: 16,
-          duration: 0.58,
+          y: 8,
+          duration: 0.35,
           ease: "power3.out",
           scrollTrigger: {
             trigger: element,
@@ -133,7 +125,7 @@ function CateringMotion({ children }: { children: React.ReactNode }) {
             trigger: image.parentElement,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1.6,
+            scrub: 1,
           },
         });
       });
@@ -180,24 +172,20 @@ export default function CateringPage() {
       <HeaderLogo />
       <CateringMotion>
         <main>
-          <section className={styles.hero} aria-labelledby="catering-title">
-            <div className={styles.heroCopy}>
-              <p data-catering-hero className={styles.kicker}>Catering by MP3 Social</p>
-              <h1 id="catering-title" data-catering-hero>
-                Matcha rave <span>catering.</span>
-              </h1>
-              <div data-catering-hero className={styles.heroBottom}>
-                <p>Ceremonial matcha at volume. Book bar alone or build full rave with sound, styling and crew.</p>
-                <div className={styles.actions}>
-                  <Link href="/book-now" className={styles.button}>Book catering <span aria-hidden="true">↗</span></Link>
-                  <a href="#matcha" className={styles.textLink}>View menu <span aria-hidden="true">↓</span></a>
-                </div>
-              </div>
-            </div>
-            <div className={styles.heroMedia} data-catering-image>
-              <Image src="/hero-bg-web.jpg" alt="Packed MP3 Social matcha rave" fill sizes="(min-width: 901px) 48vw, 100vw" className={styles.cover} priority />
-            </div>
-          </section>
+          <Hero
+            title={
+              <>
+                <span className="block">Matcha rave</span>
+                <span className="block text-primary-orange">catering.</span>
+              </>
+            }
+            titleId="catering-title"
+            copy="Ceremonial matcha at volume. Book bar alone or build full rave with sound, styling and crew."
+            primaryCta={{ href: "/book-now", label: "Book catering", icon: "↗" }}
+            secondaryCta={{ href: "#matcha", label: "View menu", icon: "↓" }}
+            image={{ src: "/hero-bg-web.jpg", alt: "Packed MP3 Social matcha rave", className: "object-cover object-center" }}
+            motion="catering"
+          />
 
           <section id="matcha" className={styles.section} aria-labelledby="matcha-title">
             <div className={styles.sectionHeading} data-catering-reveal>

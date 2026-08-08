@@ -36,7 +36,6 @@ export default function BookNowPage() {
   return (
     <EditorialShell
       code="CATERING / 005"
-      eyebrow="Book the bar"
       tone="ink"
       title={
         <>

@@ -54,8 +54,8 @@ const FAQS: StandaloneFaq[] = [
 export default function FAQsPage() {
   return (
     <EditorialShell
-      eyebrow="Useful answers"
       layout="index"
+      heroVariant="content"
       compact
       title={
         <>

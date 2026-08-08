@@ -10,7 +10,7 @@ const PILLARS = [
 
 export default function OurWayPage() {
   return (
-    <SubpageShell navMode="catering" index="01 / 03" eyebrow="Catering philosophy" title="OUR WAY" intro="We don’t drop off drinks. We build the feeling of a third space around your people." image="/community-bg.jpg" imageAlt="An energetic MP3 Social gathering">
+    <SubpageShell navMode="catering" index="01 / 03" title="OUR WAY" intro="We don’t drop off drinks. We build the feeling of a third space around your people." image="/community-bg.jpg" imageAlt="An energetic MP3 Social gathering">
       <section className="bg-warm-white px-5 py-24 md:px-10 md:py-36">
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[0.9fr_1.1fr]">
           <div><SectionLabel>The MP3 approach</SectionLabel><DisplayHeading>GOOD ROOMS DON’T HAPPEN BY ACCIDENT.</DisplayHeading></div>

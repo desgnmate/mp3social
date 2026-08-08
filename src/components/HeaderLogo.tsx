@@ -59,7 +59,7 @@ export function HeaderLogo() {
             ? "pointer-events-none fixed inset-x-0 top-3 px-3 sm:px-5"
             : hasImmersiveHero
               ? "absolute inset-x-0 top-0"
-              : "sticky inset-x-0 top-0 border-b border-dark-text/15 bg-warm-white"
+              : "sticky inset-x-0 top-0 bg-transparent"
         }`}
       >
         <div
@@ -68,7 +68,7 @@ export function HeaderLogo() {
               ? "rounded-[1.25rem] border border-dark-text/10 bg-warm-white/95 text-dark-text shadow-[0_18px_48px_rgba(44,34,27,0.16)] backdrop-blur-xl"
               : transparentHeroHeader
                 ? "border border-transparent bg-transparent text-warm-white"
-                : "border border-transparent bg-warm-white text-dark-text"
+                : "border border-transparent bg-transparent text-dark-text"
           }`}
         >
           <div
@@ -103,14 +103,14 @@ export function HeaderLogo() {
                     key={item.href}
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className={`relative flex min-h-11 items-center px-3 text-xs font-semibold transition-colors after:absolute after:bottom-1.5 after:left-3 after:right-3 after:h-px after:origin-left after:bg-primary-orange after:transition-transform hover:text-primary-orange ${
+                    className={`relative flex min-h-11 items-center rounded-full px-3 text-xs font-semibold transition-[color,transform] before:pointer-events-none before:absolute before:inset-x-0 before:inset-y-1.5 before:rounded-full before:transition-colors active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-orange ${
                       active
-                        ? "text-primary-orange after:scale-x-100"
-                        : `${
-                            transparentHeroHeader
-                              ? "text-warm-white/85"
-                              : "text-dark-text/75"
-                          } after:scale-x-0 hover:after:scale-x-100`
+                        ? transparentHeroHeader
+                          ? "text-warm-white before:bg-warm-white/20"
+                          : "text-primary-orange before:bg-primary-orange/10"
+                        : transparentHeroHeader
+                          ? "text-warm-white/85 before:bg-transparent hover:text-warm-white hover:before:bg-warm-white/10"
+                          : "text-dark-text/75 before:bg-transparent hover:text-primary-orange hover:before:bg-cream/70"
                     }`}
                   >
                     {item.label}

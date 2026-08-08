@@ -14,41 +14,17 @@ export function Loader({ onComplete, onSelect }: LoaderProps) {
   const [isExiting, setIsExiting] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Lock body scroll while loader is visible and hide scrollbar
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
-    const originalScrollbarWidth = document.body.style.scrollbarWidth;
-    const originalMsOverflow = (document.body.style as any).msOverflowStyle;
-    
-    document.body.style.overflow = "hidden";
-    document.body.style.scrollbarWidth = "none";
-    (document.body.style as any).msOverflowStyle = "none";
-    
-    // Also hide scrollbar on html element
     const html = document.documentElement;
     const originalHtmlOverflow = html.style.overflow;
+
+    document.body.style.overflow = "hidden";
     html.style.overflow = "hidden";
-    html.style.scrollbarWidth = "none";
-    (html.style as any).msOverflowStyle = "none";
-    
-    // Add CSS to hide WebKit scrollbar
-    const style = document.createElement("style");
-    style.innerHTML = `
-      body::-webkit-scrollbar { display: none !important; }
-      html::-webkit-scrollbar { display: none !important; }
-    `;
-    document.head.appendChild(style);
-    
+
     return () => {
       document.body.style.overflow = originalOverflow;
-      document.body.style.scrollbarWidth = originalScrollbarWidth;
-      (document.body.style as any).msOverflowStyle = originalMsOverflow;
-      
       html.style.overflow = originalHtmlOverflow;
-      html.style.scrollbarWidth = "auto";
-      (html.style as any).msOverflowStyle = "auto";
-      
-      document.head.removeChild(style);
     };
   }, []);
 
@@ -61,7 +37,7 @@ export function Loader({ onComplete, onSelect }: LoaderProps) {
       if (containerRef.current) {
         gsap.to(containerRef.current, {
           y: "-100%",
-          duration: 0.8,
+          duration: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 0.7,
           ease: "power2.inOut",
           onComplete: () => {
             onComplete?.();
@@ -75,7 +51,7 @@ export function Loader({ onComplete, onSelect }: LoaderProps) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[9999] bg-primary-orange"
+      className="paper-texture fixed inset-0 z-[9999] overflow-hidden bg-primary-orange"
     >
       {/* Top bar */}
       <div className="loader-text absolute inset-x-6 top-6 z-20 flex items-center justify-between text-warm-white md:inset-x-10 md:top-8">
@@ -92,11 +68,12 @@ export function Loader({ onComplete, onSelect }: LoaderProps) {
 
       {/* Center area: EVENTS button + logo + CATERING button */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-        <div className="flex items-center gap-6 md:gap-10 lg:gap-14">
+        <div className="flex items-center gap-2 md:gap-5 lg:gap-7">
           {/* EVENTS button */}
           <button
             onClick={() => handleSelect("events")}
-            className="loader-text text-warm-white transition-opacity hover:opacity-70"
+            disabled={isExiting}
+            className="loader-text inline-flex min-h-11 min-w-16 items-center justify-center rounded-full border border-warm-white/45 bg-warm-white/5 px-3 text-warm-white backdrop-blur-sm transition-[background-color,border-color,opacity,transform] hover:border-warm-white/80 hover:bg-warm-white/15 hover:opacity-100 active:scale-95 disabled:pointer-events-none disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-white"
           >
             <span className="text-xs font-bold uppercase md:text-sm">
               EVENTS
@@ -104,14 +81,14 @@ export function Loader({ onComplete, onSelect }: LoaderProps) {
           </button>
 
           {/* Logo */}
-          <div className="relative z-10 h-48 w-72 md:h-56 md:w-80 lg:h-64 lg:w-96">
+          <div className="relative z-10 h-24 w-36 md:h-32 md:w-48 lg:h-40 lg:w-64">
             {/* Logo image */}
             <div className="absolute inset-0 z-20">
               <Image
                 src="/mp3-logo-new.png"
                 alt=""
                 fill
-                sizes="(min-width: 1024px) 24rem, (min-width: 768px) 20rem, 18rem"
+                sizes="(min-width: 1024px) 16rem, (min-width: 768px) 12rem, 9rem"
                 className="object-contain"
                 quality={100}
                 priority
@@ -136,7 +113,7 @@ export function Loader({ onComplete, onSelect }: LoaderProps) {
                 src={IMAGES.community}
                 alt=""
                 fill
-                sizes="(min-width: 1024px) 24rem, (min-width: 768px) 20rem, 18rem"
+                sizes="(min-width: 1024px) 16rem, (min-width: 768px) 12rem, 9rem"
                 className="object-cover"
                 quality={85}
                 priority
@@ -147,7 +124,8 @@ export function Loader({ onComplete, onSelect }: LoaderProps) {
           {/* CATERING button */}
           <button
             onClick={() => handleSelect("catering")}
-            className="loader-text text-warm-white transition-opacity hover:opacity-70"
+            disabled={isExiting}
+            className="loader-text inline-flex min-h-11 min-w-16 items-center justify-center rounded-full border border-warm-white/45 bg-warm-white/5 px-3 text-warm-white backdrop-blur-sm transition-[background-color,border-color,opacity,transform] hover:border-warm-white/80 hover:bg-warm-white/15 hover:opacity-100 active:scale-95 disabled:pointer-events-none disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-white"
           >
             <span className="text-xs font-bold uppercase md:text-sm">
               CATERING

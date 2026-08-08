@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Hero } from "@/components/Hero";
+import { EventsHero } from "@/components/Hero";
 import { HeaderLogo } from "@/components/HeaderLogo";
 import { Intro } from "@/components/Intro";
 import { Calendar } from "@/components/Calendar";
@@ -42,7 +42,7 @@ export default function Home() {
         style={{ visibility: contentHidden ? "hidden" : "visible" }}
       >
         <HeaderLogo />
-        <Hero />
+        <EventsHero />
         <Intro />
         <Calendar />
         <FAQ />

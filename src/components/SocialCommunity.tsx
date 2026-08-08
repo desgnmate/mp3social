@@ -31,7 +31,8 @@ export function SocialCommunity() {
             fill
             sizes="100vw"
             className="object-cover"
-            quality={85}
+            quality={78}
+            loading="lazy"
           />
           <div
             className="absolute inset-0"

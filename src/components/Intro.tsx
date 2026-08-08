@@ -97,15 +97,15 @@ export function Intro() {
 
   const [openModal, setOpenModal] = useState<number | null>(null);
 
-  // Lock body scroll when modal is open
+  // Lock body scroll only while event modal is open; preserve other page locks.
   useEffect(() => {
-    if (openModal !== null) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (openModal === null) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [openModal]);
 
@@ -190,7 +190,7 @@ export function Intro() {
               opacity: 0,
               filter: "blur(3px)",
               ease: "power1.inOut",
-              duration: 55,
+              duration: i === images.length - 1 ? 5 : 55,
             },
             start + 75,
           );
@@ -231,7 +231,7 @@ export function Intro() {
             onClick={() => setOpenModal(i)}
           >
             <div className="relative h-[calc(100%-1.75rem)] w-full overflow-hidden rounded-[0.75rem]">
-              <Image src={img} alt={label} fill sizes="20vw" className="object-cover" quality={85} />
+              <Image src={img} alt={label} fill sizes="20vw" className="object-cover" quality={78} loading="lazy" />
             </div>
             <p className="mt-2 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-primary-orange">
               {label}

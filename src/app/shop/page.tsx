@@ -40,8 +40,8 @@ const DROPS = [
 export default function ShopPage() {
   return (
     <EditorialShell
-      eyebrow="Small-run goods"
       layout="catalogue"
+      heroVariant="content"
       title={
         <>
           Good things.

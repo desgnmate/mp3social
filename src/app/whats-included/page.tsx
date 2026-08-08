@@ -9,7 +9,7 @@ const INCLUDED = [
 
 export default function WhatsIncludedPage() {
   return (
-    <SubpageShell navMode="catering" index="02 / 03" eyebrow="Catering services" title="WHAT’S INCLUDED" intro="Start with the bar, then add the sound, styling and production your room needs." image="/calendar-bg.jpg" imageAlt="MP3 Social matcha service setup">
+    <SubpageShell navMode="catering" index="02 / 03" title="WHAT’S INCLUDED" intro="Start with the bar, then add the sound, styling and production your room needs." image="/calendar-bg.jpg" imageAlt="MP3 Social matcha service setup">
       <section className="bg-cream px-5 py-24 md:px-10 md:py-36">
         <div className="mx-auto max-w-6xl"><SectionLabel>Mix and match</SectionLabel><DisplayHeading>ONE TEAM. EVERY LAYER.</DisplayHeading>
           <div className="mt-16 grid gap-5 md:grid-cols-2">{INCLUDED.map((group, index) => <article key={group.title} className={`rounded-md border border-primary-orange/15 p-7 md:p-10 ${index === 0 || index === 3 ? "bg-primary-orange text-warm-white" : "bg-warm-white"}`}><span className="text-[10px] font-bold uppercase tracking-[0.18em] opacity-50">0{index + 1}</span><h3 className="heading-display mt-10 text-3xl md:text-4xl">{group.title}</h3><ul className="mt-8 space-y-3 border-t border-current/20 pt-6">{group.items.map((item) => <li key={item} className="flex items-center justify-between gap-4 text-sm"><span>{item}</span><span className="opacity-40">+</span></li>)}</ul></article>)}</div>

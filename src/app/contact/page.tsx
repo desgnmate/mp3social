@@ -29,8 +29,8 @@ const CONTACTS = [
 export default function ContactPage() {
   return (
     <EditorialShell
-      eyebrow="Contact MP3"
       layout="contact"
+      heroVariant="content"
       title={
         <>
           Good ideas
