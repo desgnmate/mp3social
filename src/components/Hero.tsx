@@ -12,7 +12,7 @@ const HEADLINE_LINES = [
 export function Hero() {
   return (
     <section
-      className="relative h-[100svh] min-h-[600px] w-full overflow-hidden"
+      className="relative mx-3 mb-3 h-[100svh] min-h-[600px] w-auto overflow-hidden rounded-[1.5rem] sm:mx-5 sm:mb-5"
       aria-label="Hero"
     >
       {/* Image layer — clean orange background, no blend-mode overlays */}

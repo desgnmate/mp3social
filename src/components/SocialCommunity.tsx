@@ -17,10 +17,10 @@ export function SocialCommunity() {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden"
+      className="relative w-full overflow-hidden bg-warm-white px-3 pb-3 sm:px-5 sm:pb-5"
       aria-label="Social community"
     >
-      <div className="relative h-[55vh] min-h-[360px] w-full overflow-hidden md:h-[60vh] md:min-h-[420px]">
+      <div className="relative mx-auto h-[55vh] min-h-[360px] w-full max-w-[80rem] overflow-hidden rounded-[1.5rem] md:h-[60vh] md:min-h-[420px]">
         <motion.div
           className="absolute inset-0 chromatic-aberration"
           style={{ y, scale: 1.1 }}

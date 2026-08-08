@@ -29,8 +29,8 @@ function FAQRow({
   return (
     <article
       data-faq-row
-      className={`border-t border-warm-white/45 transition-colors duration-300 last:border-b ${
-        open ? "bg-dark-text text-warm-white" : "text-warm-white"
+      className={`overflow-hidden rounded-[1.25rem] border border-warm-white/35 transition-colors duration-300 ${
+        open ? "bg-dark-text text-warm-white" : "bg-primary-orange text-warm-white"
       }`}
     >
       <button
@@ -49,7 +49,7 @@ function FAQRow({
         <motion.span
           animate={{ rotate: open ? 45 : 0 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="text-3xl font-light leading-none text-warm-white md:text-4xl"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-warm-white/45 text-2xl font-light leading-none text-warm-white md:h-11 md:w-11 md:text-3xl"
           aria-hidden="true"
         >
           +
@@ -131,12 +131,13 @@ export function FAQ() {
     <section
       id="faq"
       ref={sectionRef}
-      className="relative overflow-hidden bg-primary-orange"
+      className="relative overflow-hidden bg-warm-white px-3 py-3 sm:px-5 sm:py-5"
       aria-labelledby="faq-title"
     >
-      <div className="dust-specks opacity-25" />
+      <div className="relative mx-auto max-w-[80rem] overflow-hidden rounded-[1.5rem] bg-primary-orange">
+        <div className="dust-specks opacity-25" />
 
-      <div className="page-container-wide relative py-20 md:py-28 lg:py-36">
+      <div className="relative px-5 py-20 sm:px-8 md:py-28 lg:px-10 lg:py-36">
         <div
           ref={headingRef}
           className="grid items-end gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-20"
@@ -147,7 +148,7 @@ export function FAQ() {
             </p>
             <h2
               id="faq-title"
-              className="heading-display mt-5 text-[clamp(3.8rem,10vw,9.5rem)] leading-[0.76] tracking-[-0.075em] text-warm-white"
+              className="section-title-clamp heading-display mt-5 text-[clamp(3.8rem,10vw,9.5rem)] leading-[0.76] tracking-[-0.075em] text-warm-white"
             >
               Ask it
               <br />
@@ -162,14 +163,14 @@ export function FAQ() {
               First rave? Matcha curious? Trying to bring MP3 into your own
               room? Start here.
             </p>
-            <div className="mt-8 flex items-center justify-between border-y border-dark-text/25 py-4 text-[10px] font-black uppercase tracking-[0.17em] text-dark-text/65">
+            <div className="mt-8 flex items-center justify-between rounded-full border border-dark-text/25 bg-warm-white/10 px-5 py-4 text-[10px] font-black uppercase tracking-[0.17em] text-dark-text/65">
               <span>FAQ</span>
               <span>01—{String(FAQ_ITEMS.length).padStart(2, "0")}</span>
             </div>
           </div>
         </div>
 
-        <div ref={listRef} className="mt-16 lg:mt-24">
+        <div ref={listRef} className="mt-16 grid gap-3 lg:mt-24">
           {FAQ_ITEMS.map((item, index) => (
             <FAQRow
               key={item.question}
@@ -183,6 +184,7 @@ export function FAQ() {
             />
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

@@ -215,7 +215,7 @@ export function Intro() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[100vh] w-full overflow-hidden bg-primary-orange"
+      className="relative h-[100vh] w-full overflow-hidden rounded-[1.5rem] bg-primary-orange"
       aria-label="About"
     >
       <div className="dust-specks" />
@@ -226,11 +226,11 @@ export function Intro() {
           <div
             key={i}
             ref={ref}
-            className="absolute h-[36vh] w-[20vw] max-w-[280px] cursor-pointer bg-warm-white p-3 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] transition-transform hover:scale-105"
+            className="absolute h-[36vh] w-[20vw] max-w-[280px] cursor-pointer overflow-hidden rounded-[1.25rem] bg-warm-white p-3 shadow-[0_25px_50px_-12px_rgba(44,34,27,0.42)] transition-transform hover:scale-105"
             style={{ willChange: "transform, filter, opacity" }}
             onClick={() => setOpenModal(i)}
           >
-            <div className="relative h-[calc(100%-1.75rem)] w-full overflow-hidden">
+            <div className="relative h-[calc(100%-1.75rem)] w-full overflow-hidden rounded-[0.75rem]">
               <Image src={img} alt={label} fill sizes="20vw" className="object-cover" quality={85} />
             </div>
             <p className="mt-2 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-primary-orange">
@@ -252,7 +252,7 @@ export function Intro() {
           className="relative flex h-full w-[100vw] items-center justify-center px-6 md:px-12"
           style={{ zIndex: 10, willChange: "transform" }}
         >
-          <h2 className="heading-display text-center text-warm-white text-[clamp(2.5rem,7vw,6rem)] leading-[1.05]">
+          <h2 className="section-title-clamp heading-display text-center text-warm-white text-[clamp(2.5rem,7vw,6rem)] leading-[1.05]">
             YES IT&apos;S A RAVE.
             <br />
             YES IT&apos;S 10 AM.
@@ -268,7 +268,7 @@ export function Intro() {
           className="flex h-full w-[100vw] items-center justify-center px-6 md:px-12"
           style={{ zIndex: 10, willChange: "transform" }}
         >
-          <h2 className="heading-display text-center text-warm-white text-[clamp(2.5rem,7vw,6rem)] leading-[1.05]">
+          <h2 className="section-title-clamp heading-display text-center text-warm-white text-[clamp(2.5rem,7vw,6rem)] leading-[1.05]">
             NO WE WON&apos;T
             <br />
             EXPLAIN IT AGAIN.
@@ -288,11 +288,11 @@ export function Intro() {
               <Image src="/mp3-logo.png" alt="MP3 Social" fill sizes="(min-width: 1024px) 12rem, (min-width: 768px) 10rem, 8rem" className="object-contain" quality={100} />
             </div>
             <div className="max-w-2xl">
-              <h2 className="heading-display text-warm-white text-[clamp(1.65rem,3.85vw,3.3rem)] leading-[1.1]">
+              <h2 className="section-title-clamp heading-display text-warm-white text-[clamp(1.65rem,3.85vw,3.3rem)] leading-[1.1]">
                 MATCHA IN HAND. MUSIC UP. STRANGERS TURNING INTO FRIENDS BEFORE NOON.
               </h2>
             </div>
-            <a href="#calendar" className="inline-block border-2 border-warm-white bg-warm-white px-6 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.25em] text-primary-orange transition-colors hover:bg-primary-orange hover:text-warm-white md:px-8 md:py-3 md:text-xs">
+            <a href="#calendar" className="inline-block rounded-full border-2 border-warm-white bg-warm-white px-6 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.25em] text-primary-orange transition-colors hover:bg-primary-orange hover:text-warm-white md:px-8 md:py-3 md:text-xs">
               SEE NEXT EVENT
             </a>
           </div>
@@ -308,8 +308,7 @@ export function Intro() {
           onClick={() => setOpenModal(null)}
         >
           <div
-            className="relative mx-4 w-full max-w-[340px] overflow-hidden rounded-lg shadow-2xl"
-            style={{ backgroundColor: "#EBDEC2" }}
+            className="relative mx-4 w-full max-w-[340px] overflow-hidden rounded-[1.5rem] bg-cream shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}

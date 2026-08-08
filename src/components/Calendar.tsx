@@ -138,12 +138,13 @@ export function Calendar() {
     <section
       id="calendar"
       ref={sectionRef}
-      className="relative overflow-hidden bg-dark-text text-warm-white"
+      className="relative overflow-hidden bg-warm-white px-3 py-3 text-warm-white sm:px-5 sm:py-5"
       aria-labelledby="events-title"
     >
-      <div className="dust-specks opacity-20" />
+      <div className="relative mx-auto max-w-[80rem] overflow-hidden rounded-[1.5rem] bg-dark-text">
+        <div className="dust-specks opacity-20" />
 
-      <div className="page-container-wide relative py-20 md:py-28 lg:py-36">
+      <div className="relative px-5 py-20 sm:px-8 md:py-28 lg:px-10 lg:py-36">
         <div
           ref={headingRef}
           className="grid items-end gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-20"
@@ -154,7 +155,7 @@ export function Calendar() {
             </p>
             <h2
               id="events-title"
-              className="heading-display mt-5 text-[clamp(4.5rem,12vw,11rem)] leading-[0.72] tracking-[-0.075em]"
+              className="section-title-clamp heading-display mt-5 text-[clamp(4.5rem,12vw,11rem)] leading-[0.72] tracking-[-0.075em]"
             >
               What&apos;s
               <br />
@@ -167,11 +168,11 @@ export function Calendar() {
               Morning raves, matcha parties and third-space takeovers. Pick a
               date and meet us in the room.
             </p>
-            <div className="mt-8 flex items-center justify-between border-y border-warm-white/25 py-3">
+            <div className="mt-8 flex items-center justify-between rounded-full border border-warm-white/25 bg-warm-white/5 px-1 py-1">
               <button
                 type="button"
                 onClick={() => shiftMonth(-1)}
-                className="flex h-11 w-11 items-center justify-center text-lg text-primary-orange transition-transform hover:-translate-x-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-orange"
+                className="flex h-11 w-11 items-center justify-center rounded-full text-lg text-primary-orange transition-[background-color,transform] hover:-translate-x-1 hover:bg-warm-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-orange"
                 aria-label="Previous month"
               >
                 ←
@@ -187,7 +188,7 @@ export function Calendar() {
               <button
                 type="button"
                 onClick={() => shiftMonth(1)}
-                className="flex h-11 w-11 items-center justify-center text-lg text-primary-orange transition-transform hover:translate-x-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-orange"
+                className="flex h-11 w-11 items-center justify-center rounded-full text-lg text-primary-orange transition-[background-color,transform] hover:translate-x-1 hover:bg-warm-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-orange"
                 aria-label="Next month"
               >
                 →
@@ -196,7 +197,7 @@ export function Calendar() {
           </div>
         </div>
 
-        <div className="mt-16 grid overflow-hidden border border-warm-white/35 lg:mt-24 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="mt-16 grid overflow-hidden rounded-[1.5rem] border border-warm-white/35 lg:mt-24 lg:grid-cols-[0.9fr_1.1fr]">
           <div
             ref={imageRef}
             className="relative min-h-[520px] overflow-hidden border-b border-warm-white/35 bg-primary-orange lg:min-h-[720px] lg:border-b-0 lg:border-r"
@@ -219,7 +220,7 @@ export function Calendar() {
               aria-hidden="true"
             />
 
-            <div className="absolute left-5 top-5 border border-warm-white/50 bg-dark-text/70 px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] backdrop-blur-sm md:left-7 md:top-7">
+            <div className="absolute left-5 top-5 rounded-full border border-warm-white/50 bg-dark-text/70 px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] backdrop-blur-sm md:left-7 md:top-7">
               Current transmission
             </div>
 
@@ -306,6 +307,7 @@ export function Calendar() {
             )}
           </div>
         </div>
+      </div>
       </div>
 
       <EventModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />

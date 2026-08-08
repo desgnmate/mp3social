@@ -42,8 +42,7 @@ export default function Home() {
         style={{ visibility: contentHidden ? "hidden" : "visible" }}
       >
         <HeaderLogo />
-        {/* One continuous orange background for hero + intro */}
-        <div className="relative bg-primary-orange">
+        <div className="relative bg-warm-white pb-3 sm:pb-5">
           <Hero />
           <Intro />
         </div>
