@@ -26,6 +26,8 @@ export function HeaderLogo() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const isEventsPage = pathname === "/";
+  const isCateringPage = pathname === "/catering";
+  const hasImmersiveHero = isEventsPage || isCateringPage;
 
   useEffect(() => {
     setMenuOpen(false);
@@ -40,7 +42,7 @@ export function HeaderLogo() {
     return () => window.removeEventListener("scroll", updateHeader);
   }, []);
 
-  const transparentEventsHeader = isEventsPage && !scrolled;
+  const transparentHeroHeader = hasImmersiveHero && !scrolled;
 
   const isActive = (href: string) =>
     href === "/"
@@ -55,7 +57,7 @@ export function HeaderLogo() {
         className={`z-50 transition-[padding,top] duration-300 ${
           scrolled
             ? "pointer-events-none fixed inset-x-0 top-3 px-3 sm:px-5"
-            : isEventsPage
+            : hasImmersiveHero
               ? "absolute inset-x-0 top-0"
               : "sticky inset-x-0 top-0 border-b border-dark-text/15 bg-warm-white"
         }`}
@@ -64,7 +66,7 @@ export function HeaderLogo() {
           className={`pointer-events-auto mx-auto w-full max-w-[80rem] overflow-hidden transition-[background-color,border-color,box-shadow,border-radius] duration-300 ${
             scrolled
               ? "rounded-[1.25rem] border border-dark-text/10 bg-warm-white/95 text-dark-text shadow-[0_18px_48px_rgba(44,34,27,0.16)] backdrop-blur-xl"
-              : transparentEventsHeader
+              : transparentHeroHeader
                 ? "border border-transparent bg-transparent text-warm-white"
                 : "border border-transparent bg-warm-white text-dark-text"
           }`}
@@ -105,7 +107,7 @@ export function HeaderLogo() {
                       active
                         ? "text-primary-orange after:scale-x-100"
                         : `${
-                            transparentEventsHeader
+                            transparentHeroHeader
                               ? "text-warm-white/85"
                               : "text-dark-text/75"
                           } after:scale-x-0 hover:after:scale-x-100`
@@ -128,7 +130,7 @@ export function HeaderLogo() {
               <button
                 type="button"
                 className={`inline-flex min-h-11 min-w-[70px] items-center justify-center rounded-full border px-3 text-xs font-bold transition-colors hover:border-primary-orange hover:text-primary-orange lg:hidden ${
-                  transparentEventsHeader
+                  transparentHeroHeader
                     ? "border-warm-white/45 text-warm-white"
                     : "border-dark-text/20 text-dark-text"
                 }`}
@@ -180,7 +182,7 @@ export function HeaderLogo() {
         </div>
       </header>
 
-      {!isEventsPage && scrolled && <div className="h-20" aria-hidden="true" />}
+      {!hasImmersiveHero && scrolled && <div className="h-20" aria-hidden="true" />}
     </>
   );
 }

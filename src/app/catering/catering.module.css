@@ -658,9 +658,9 @@
 .hero {
   position: relative;
   display: block;
-  min-height: min(46rem, calc(100dvh - 6rem));
+  min-height: max(46rem, calc(100svh - 1.5rem));
   margin-top: 0.75rem;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
+  padding: clamp(7.5rem, 11vw, 9rem) clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.5rem);
   overflow: hidden;
   border-radius: 1.5rem;
   color: var(--paper);
@@ -680,7 +680,7 @@
 .heroCopy {
   position: relative;
   z-index: 2;
-  min-height: calc(min(46rem, calc(100dvh - 6rem)) - clamp(3rem, 6vw, 5rem));
+  min-height: calc(max(46rem, calc(100svh - 1.5rem)) - clamp(9rem, 14vw, 11.5rem));
 }
 
 .hero .kicker {
@@ -834,11 +834,11 @@
   .hero {
     min-height: 44rem;
     margin-inline: 0.75rem;
-    padding: 1.25rem;
+    padding: 7rem 1.25rem 1.25rem;
   }
 
   .heroCopy {
-    min-height: 41.5rem;
+    min-height: 35.75rem;
     padding-bottom: 0;
   }
 
@@ -865,11 +865,11 @@
   .hero {
     min-height: 43rem;
     margin-top: 0.75rem;
-    padding-top: 1.25rem;
+    padding-top: 6.25rem;
   }
 
   .heroCopy {
-    min-height: 40.5rem;
+    min-height: 35.5rem;
   }
 
   .hero h1 {
