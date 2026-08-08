@@ -29,14 +29,14 @@ function FAQRow({
   return (
     <article
       data-faq-row
-      className={`overflow-hidden rounded-[1.25rem] border border-warm-white/35 transition-colors duration-300 ${
-        open ? "bg-dark-text text-warm-white" : "bg-primary-orange text-warm-white"
+      className={`border-b border-dark-text/15 transition-colors duration-300 last:border-b-0 ${
+        open ? "bg-primary-orange text-warm-white" : "bg-cream text-dark-text"
       }`}
     >
       <button
         type="button"
         onClick={onToggle}
-        className="group grid w-full grid-cols-[2.25rem_1fr_auto] items-center gap-3 px-4 py-6 text-left transition-colors hover:bg-dark-text md:grid-cols-[4rem_1fr_auto] md:gap-6 md:px-8 md:py-8 lg:px-10"
+        className={`group grid w-full grid-cols-[2.25rem_1fr_auto] items-center gap-3 px-4 py-6 text-left transition-colors md:grid-cols-[4rem_1fr_auto] md:gap-6 md:px-8 md:py-8 lg:px-10 ${open ? "hover:bg-primary-orange-burnt" : "hover:bg-cream-beige"}`}
         aria-expanded={open}
         aria-controls={panelId}
       >
@@ -49,7 +49,7 @@ function FAQRow({
         <motion.span
           animate={{ rotate: open ? 45 : 0 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-warm-white/45 text-2xl font-light leading-none text-warm-white md:h-11 md:w-11 md:text-3xl"
+          className={`flex h-10 w-10 items-center justify-center rounded-full border text-2xl font-light leading-none md:h-11 md:w-11 md:text-3xl ${open ? "border-warm-white/45 text-warm-white" : "border-primary-orange/45 text-primary-orange"}`}
           aria-hidden="true"
         >
           +
@@ -131,13 +131,12 @@ export function FAQ() {
     <section
       id="faq"
       ref={sectionRef}
-      className="relative overflow-hidden bg-warm-white px-3 py-3 sm:px-5 sm:py-5"
+      className="relative overflow-hidden bg-primary-orange"
       aria-labelledby="faq-title"
     >
-      <div className="relative mx-auto max-w-[80rem] overflow-hidden rounded-[1.5rem] bg-primary-orange">
-        <div className="dust-specks opacity-25" />
+      <div className="dust-specks opacity-25" />
 
-      <div className="relative px-5 py-20 sm:px-8 md:py-28 lg:px-10 lg:py-36">
+      <div className="page-container-wide relative py-20 md:py-28 lg:py-32">
         <div
           ref={headingRef}
           className="grid items-end gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-20"
@@ -148,7 +147,7 @@ export function FAQ() {
             </p>
             <h2
               id="faq-title"
-              className="section-title-clamp heading-display mt-5 text-[clamp(3.8rem,10vw,9.5rem)] leading-[0.76] tracking-[-0.075em] text-warm-white"
+              className="section-title-clamp heading-display mt-5 text-[clamp(3.5rem,8vw,7.5rem)] leading-[0.78] tracking-[-0.07em] text-warm-white"
             >
               Ask it
               <br />
@@ -170,7 +169,7 @@ export function FAQ() {
           </div>
         </div>
 
-        <div ref={listRef} className="mt-16 grid gap-3 lg:mt-24">
+        <div ref={listRef} className="mt-16 overflow-hidden rounded-[1.5rem] bg-cream lg:mt-24">
           {FAQ_ITEMS.map((item, index) => (
             <FAQRow
               key={item.question}
@@ -184,7 +183,6 @@ export function FAQ() {
             />
           ))}
         </div>
-      </div>
       </div>
     </section>
   );

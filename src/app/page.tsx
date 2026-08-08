@@ -42,10 +42,8 @@ export default function Home() {
         style={{ visibility: contentHidden ? "hidden" : "visible" }}
       >
         <HeaderLogo />
-        <div className="relative bg-warm-white pb-3 sm:pb-5">
-          <Hero />
-          <Intro />
-        </div>
+        <Hero />
+        <Intro />
         <Calendar />
         <FAQ />
         <SocialCommunity />

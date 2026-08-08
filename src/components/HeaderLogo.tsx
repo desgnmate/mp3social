@@ -17,12 +17,24 @@ const MENU_ITEMS = [
 export function HeaderLogo() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const isEventsPage = pathname === "/";
   const cateringRoutes = ["/catering", "/our-way", "/whats-included", "/book-now"];
 
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const updateHeader = () => setScrolled(window.scrollY > 72);
+
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+
+    return () => window.removeEventListener("scroll", updateHeader);
+  }, []);
+
+  const transparentEventsHeader = isEventsPage && !scrolled;
 
   const isActive = (href: string) =>
     href === "/"
@@ -32,19 +44,22 @@ export function HeaderLogo() {
         : pathname.startsWith(href);
 
   return (
-    <header
-      className={`left-0 right-0 top-0 z-50 ${
-        isEventsPage
-          ? "absolute border-b border-transparent bg-transparent text-warm-white"
-          : "sticky border-b border-dark-text/15 bg-warm-white text-dark-text"
-      }`}
-    >
-      {!isEventsPage && (
-        <div className="flex min-h-6 items-center justify-center bg-primary-orange px-4 py-1 text-center text-[0.625rem] font-bold uppercase tracking-[0.14em] text-warm-white">
-          Matcha bars · daytime raves · made for rooms that want more energy
-        </div>
-      )}
-      <div className="grid min-h-[72px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-5 lg:min-h-[80px] lg:px-8">
+    <>
+      <header
+        className={`z-50 transition-[background-color,border-color,box-shadow,left,right,top,border-radius] duration-300 ${
+          scrolled
+            ? "fixed left-3 right-3 top-3 overflow-hidden rounded-[1.25rem] border border-dark-text/10 bg-warm-white/95 text-dark-text shadow-[0_18px_48px_rgba(44,34,27,0.16)] backdrop-blur-xl sm:left-5 sm:right-5"
+            : isEventsPage
+              ? "absolute left-0 right-0 top-0 border-b border-transparent bg-transparent text-warm-white"
+              : "sticky left-0 right-0 top-0 border-b border-dark-text/15 bg-warm-white text-dark-text"
+        }`}
+      >
+        {!isEventsPage && !scrolled && (
+          <div className="flex min-h-6 items-center justify-center bg-primary-orange px-4 py-1 text-center text-[0.625rem] font-bold uppercase tracking-[0.14em] text-warm-white">
+            Matcha bars · daytime raves · made for rooms that want more energy
+          </div>
+        )}
+        <div className={`grid grid-cols-[1fr_auto_1fr] items-center px-4 transition-[min-height] duration-300 sm:px-5 lg:px-8 ${scrolled ? "min-h-16" : "min-h-[72px] lg:min-h-[80px]"}`}>
         <Link
           href="/"
           aria-label="MP3 Social home"
@@ -75,7 +90,7 @@ export function HeaderLogo() {
                   active
                     ? "text-primary-orange after:scale-x-100"
                     : `${
-                        isEventsPage ? "text-warm-white/85" : "text-dark-text/75"
+                        transparentEventsHeader ? "text-warm-white/85" : "text-dark-text/75"
                       } after:scale-x-0 hover:after:scale-x-100`
                 }`}
               >
@@ -96,7 +111,7 @@ export function HeaderLogo() {
           <button
             type="button"
             className={`inline-flex min-h-11 min-w-[70px] items-center justify-center rounded-full border px-3 text-xs font-bold transition-colors hover:border-primary-orange hover:text-primary-orange lg:hidden ${
-              isEventsPage
+              transparentEventsHeader
                 ? "border-warm-white/45 text-warm-white"
                 : "border-dark-text/20 text-dark-text"
             }`}
@@ -107,43 +122,45 @@ export function HeaderLogo() {
             {menuOpen ? "Close" : "Menu"}
           </button>
         </div>
-      </div>
+        </div>
 
-      <div
-        id="mobile-primary-navigation"
-        className={`overflow-hidden border-t border-dark-text/15 bg-cream transition-[max-height,opacity] duration-300 lg:hidden ${
-          menuOpen ? "max-h-[34rem] opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <nav
-          aria-label="Mobile primary navigation"
-          className="grid grid-cols-2 px-4 py-3 sm:px-5"
+        <div
+          id="mobile-primary-navigation"
+          className={`overflow-hidden border-t border-dark-text/15 bg-cream transition-[max-height,opacity] duration-300 lg:hidden ${
+            menuOpen ? "max-h-[34rem] opacity-100" : "max-h-0 opacity-0"
+          }`}
         >
-          {MENU_ITEMS.map((item, index) => {
-            const active = isActive(item.href);
-            return (
+          <nav
+            aria-label="Mobile primary navigation"
+            className="grid grid-cols-2 px-4 py-3 sm:px-5"
+          >
+            {MENU_ITEMS.map((item, index) => {
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`flex min-h-14 items-center justify-between border-b border-dark-text/15 px-1 text-sm font-bold ${
+                    index % 2 === 0 ? "mr-3" : "ml-3"
+                  } ${active ? "text-primary-orange" : "text-dark-text"}`}
+                >
+                  {item.label}
+                  <span aria-hidden="true">↗</span>
+                </Link>
+              );
+            })}
             <Link
-              key={item.href}
-              href={item.href}
-              aria-current={active ? "page" : undefined}
-              className={`flex min-h-14 items-center justify-between border-b border-dark-text/15 px-1 text-sm font-bold ${
-                index % 2 === 0 ? "mr-3" : "ml-3"
-              } ${active ? "text-primary-orange" : "text-dark-text"}`}
+              href="/book-now"
+              className="col-span-2 mt-4 flex min-h-12 items-center justify-between bg-primary-orange px-4 text-xs font-bold text-warm-white sm:hidden"
             >
-              {item.label}
+              Book catering
               <span aria-hidden="true">↗</span>
             </Link>
-          );
-        })}
-          <Link
-            href="/book-now"
-            className="col-span-2 mt-4 flex min-h-12 items-center justify-between bg-primary-orange px-4 text-xs font-bold text-warm-white sm:hidden"
-          >
-            Book catering
-            <span aria-hidden="true">↗</span>
-          </Link>
-        </nav>
-      </div>
-    </header>
+          </nav>
+        </div>
+      </header>
+      {!isEventsPage && scrolled && <div className="h-[104px]" aria-hidden="true" />}
+    </>
   );
 }

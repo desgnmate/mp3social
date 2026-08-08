@@ -138,13 +138,12 @@ export function Calendar() {
     <section
       id="calendar"
       ref={sectionRef}
-      className="relative overflow-hidden bg-warm-white px-3 py-3 text-warm-white sm:px-5 sm:py-5"
+      className="relative overflow-hidden bg-dark-text text-warm-white"
       aria-labelledby="events-title"
     >
-      <div className="relative mx-auto max-w-[80rem] overflow-hidden rounded-[1.5rem] bg-dark-text">
-        <div className="dust-specks opacity-20" />
+      <div className="dust-specks opacity-20" />
 
-      <div className="relative px-5 py-20 sm:px-8 md:py-28 lg:px-10 lg:py-36">
+      <div className="page-container-wide relative py-20 md:py-28 lg:py-32">
         <div
           ref={headingRef}
           className="grid items-end gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-20"
@@ -155,7 +154,7 @@ export function Calendar() {
             </p>
             <h2
               id="events-title"
-              className="section-title-clamp heading-display mt-5 text-[clamp(4.5rem,12vw,11rem)] leading-[0.72] tracking-[-0.075em]"
+              className="section-title-clamp heading-display mt-5 text-[clamp(3.75rem,9vw,8rem)] leading-[0.78] tracking-[-0.07em]"
             >
               What&apos;s
               <br />
@@ -244,7 +243,7 @@ export function Calendar() {
           <div ref={listRef} className="bg-cream text-dark-text">
             <div
               data-event-row
-              className="flex min-h-20 items-center justify-between border-b border-dark-text px-5 py-4 md:px-7"
+              className="flex min-h-20 items-center justify-between border-b border-dark-text/20 px-5 py-4 md:px-7"
             >
               <span className="label-caps">The next three</span>
               <span className="font-serif text-lg italic text-primary-orange">
@@ -263,7 +262,7 @@ export function Calendar() {
                   onMouseEnter={() => setPreviewIndex(index)}
                   onFocus={() => setPreviewIndex(index)}
                   onClick={() => setSelectedEvent(event)}
-                  className={`group grid w-full grid-cols-[4.5rem_1fr_auto] items-center gap-4 border-b border-dark-text px-5 py-7 text-left transition-colors duration-300 last:border-b-0 md:grid-cols-[6rem_1fr_auto] md:gap-7 md:px-7 md:py-10 ${
+                  className={`group grid w-full grid-cols-[4.5rem_1fr_auto] items-center gap-4 border-b border-dark-text/20 px-5 py-7 text-left transition-colors duration-300 last:border-b-0 md:grid-cols-[6rem_1fr_auto] md:gap-7 md:px-7 md:py-10 ${
                     previewIndex === index
                       ? "bg-primary-orange text-warm-white"
                       : "bg-cream text-dark-text hover:bg-primary-orange hover:text-warm-white"
@@ -307,7 +306,6 @@ export function Calendar() {
             )}
           </div>
         </div>
-      </div>
       </div>
 
       <EventModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />

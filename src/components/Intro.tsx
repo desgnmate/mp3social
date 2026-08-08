@@ -215,7 +215,7 @@ export function Intro() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[100vh] w-full overflow-hidden rounded-[1.5rem] bg-primary-orange"
+      className="relative h-[100vh] w-full overflow-hidden bg-primary-orange"
       aria-label="About"
     >
       <div className="dust-specks" />
