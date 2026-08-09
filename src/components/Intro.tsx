@@ -93,7 +93,6 @@ export function Intro() {
   const text4Ref = useRef<HTMLDivElement>(null);
   const img1Ref = useRef<HTMLDivElement>(null);
   const img2Ref = useRef<HTMLDivElement>(null);
-  const img3Ref = useRef<HTMLDivElement>(null);
 
   const [openModal, setOpenModal] = useState<number | null>(null);
 
@@ -130,27 +129,23 @@ export function Intro() {
           },
         });
 
-        // Track: 0 → -690vw
-        tl.to(track, { x: -VW * 6.9, ease: "none", duration: 690 }, 0);
+        // Track: 0 → -570vw
+        tl.to(track, { x: -VW * 5.7, ease: "none", duration: 570 }, 0);
 
         // ── P1 lock ──
         tl.to(text1Ref.current!, { x: VW * 0.4, ease: "none", duration: 40 }, 0);
         tl.to(text1Ref.current!, { x: 0, ease: "none", duration: 20 }, 40);
 
-        // ── P2 lock: hold the entire three-polaroid sequence ──
+        // ── P2 lock: hold the two-polaroid sequence ──
         tl.to(
           text2Ref.current!,
-          { x: VW * 3.35, ease: "none", duration: 335 },
+          { x: VW * 2.15, ease: "none", duration: 215 },
           200,
         );
 
-        // ── 3 images ──
-        const images = [
-          img1Ref.current!,
-          img2Ref.current!,
-          img3Ref.current!,
-        ];
-        const rotations = [-3, 2, -2];
+        // ── 2 images; third animation sequence removed ──
+        const images = [img1Ref.current!, img2Ref.current!];
+        const rotations = [-3, 2];
 
         images.forEach((img, i) => {
           if (!img) return;
@@ -197,8 +192,8 @@ export function Intro() {
         });
 
         // ── P2 unlock, P4 lock ──
-        tl.to(text2Ref.current!, { x: 0, ease: "none", duration: 40 }, 535);
-        tl.to(text4Ref.current!, { x: VW, ease: "none", duration: 100 }, 590);
+        tl.to(text2Ref.current!, { x: 0, ease: "none", duration: 40 }, 415);
+        tl.to(text4Ref.current!, { x: VW, ease: "none", duration: 100 }, 470);
       }, sectionRef);
 
       return () => ctx.revert();
@@ -209,7 +204,6 @@ export function Intro() {
   const imagesData = [
     { ref: img1Ref, img: "/community-bg.jpg", label: "10 AM ENERGY" },
     { ref: img2Ref, img: "/calendar-bg.jpg", label: "GOOD VIBES" },
-    { ref: img3Ref, img: "/hero-bg.png", label: "MATCHA HOUR" },
   ];
 
   return (
@@ -220,7 +214,7 @@ export function Intro() {
     >
       <div className="dust-specks" />
 
-      {/* ── Panel 3 overlay — 3 photos ── */}
+      {/* ── Photo overlay — third sequence removed ── */}
       <div className="absolute inset-0 z-20">
         {imagesData.map(({ ref, img, label }, i) => (
           <div
@@ -244,7 +238,7 @@ export function Intro() {
       <div
         ref={trackRef}
         className="absolute top-0 left-0 z-10 flex h-full"
-        style={{ width: "790vw" }}
+        style={{ width: "670vw" }}
       >
         {/* ── Panel 1 ── */}
         <div
@@ -275,7 +269,7 @@ export function Intro() {
           </h2>
         </div>
 
-        <div className="flex-shrink-0 w-[290vw]" aria-hidden="true" />
+        <div className="flex-shrink-0 w-[170vw]" aria-hidden="true" />
 
         {/* ── Panel 4 ── */}
         <div

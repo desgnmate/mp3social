@@ -44,7 +44,7 @@ export default function AboutPage() {
       image="/community-bg.jpg"
       imageAlt="MP3 Social community dancing together"
       imagePosition="object-[63%_center]"
-      primaryCta={{ href: "/", label: "See events" }}
+      primaryCta={{ href: "/events", label: "See events" }}
       secondaryCta={{ href: "/contact", label: "Contact us" }}
     >
       <section className="editorial-section">

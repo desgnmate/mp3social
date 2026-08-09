@@ -57,7 +57,7 @@ export default function ShopPage() {
         href: "mailto:hello@mp3social.com?subject=MP3%20drop%20list",
         label: "Join drop list",
       }}
-      secondaryCta={{ href: "/", label: "See events" }}
+      secondaryCta={{ href: "/events", label: "See events" }}
     >
       <section className="editorial-section">
         <div className="page-container-wide">
@@ -117,7 +117,7 @@ export default function ShopPage() {
             <p className="mt-7 max-w-md text-base font-medium leading-relaxed text-dark-text/65">
               New pours and objects appear at MP3 events first. Dance, taste the drop and take home what earns a place.
             </p>
-            <Link href="/" className="editorial-button mt-8">
+            <Link href="/events" className="editorial-button mt-8">
               See events <span aria-hidden="true">↗</span>
             </Link>
           </div>

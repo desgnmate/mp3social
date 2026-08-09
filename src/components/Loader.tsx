@@ -6,11 +6,10 @@ import gsap from "gsap";
 import { IMAGES } from "@/lib/images";
 
 type LoaderProps = {
-  onComplete?: () => void;
   onSelect?: (choice: "events" | "catering") => void;
 };
 
-export function Loader({ onComplete, onSelect }: LoaderProps) {
+export function Loader({ onSelect }: LoaderProps) {
   const [isExiting, setIsExiting] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -40,12 +39,12 @@ export function Loader({ onComplete, onSelect }: LoaderProps) {
           duration: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 0.7,
           ease: "power2.inOut",
           onComplete: () => {
-            onComplete?.();
+            window.location.assign(`/${choice}`);
           },
         });
       }
     },
-    [isExiting, onSelect, onComplete]
+    [isExiting, onSelect]
   );
 
   return (

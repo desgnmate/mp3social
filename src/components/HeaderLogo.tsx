@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const MENU_ITEMS = [
-  { label: "Events", href: "/" },
+  { label: "Events", href: "/events" },
   { label: "Catering", href: "/catering" },
   { label: "Shop", href: "/shop" },
   { label: "FAQs", href: "/faqs" },
@@ -25,7 +25,7 @@ export function HeaderLogo() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const isEventsPage = pathname === "/";
+  const isEventsPage = pathname === "/events";
   const isCateringPage = pathname === "/catering";
   const hasImmersiveHero = isEventsPage || isCateringPage;
 
@@ -45,11 +45,9 @@ export function HeaderLogo() {
   const transparentHeroHeader = hasImmersiveHero && !scrolled;
 
   const isActive = (href: string) =>
-    href === "/"
-      ? pathname === "/"
-      : href === "/catering"
-        ? CATERING_ROUTES.some((route) => pathname.startsWith(route))
-        : pathname.startsWith(href);
+    href === "/catering"
+      ? CATERING_ROUTES.some((route) => pathname.startsWith(route))
+      : pathname.startsWith(href);
 
   return (
     <>

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const LINKS = [
-  { label: "Events", href: "/" },
+  { label: "Events", href: "/events" },
   { label: "Catering", href: "/catering" },
   { label: "Shop", href: "/shop" },
   { label: "FAQs", href: "/faqs" },
@@ -31,7 +31,7 @@ export function Footer() {
             >
               Book catering <span aria-hidden="true">↗</span>
             </Link>
-            <Link href="/#calendar" className="editorial-text-link text-warm-white">
+            <Link href="/events#calendar" className="editorial-text-link text-warm-white">
               See events <span aria-hidden="true">↓</span>
             </Link>
           </div>
